@@ -151,11 +151,45 @@
         <h1 style="margin-top:5vh; font-size: 38px;">NEON SOCCER</h1>
         <h2 style="color:#00f3ff; margin-bottom: 20px;">PRO MANAGER ULTIMATE 4V4</h2>
         
-        <input type="text" id="manager-name-input" value="" placeholder="Manager Name" style="width: 320px; font-size: 18px; font-weight: bold; padding: 15px; margin-bottom: 30px;">
+        <input type="text" id="manager-name-input" value="" placeholder="Manager Name" style="width: 320px; font-size: 18px; font-weight: bold; padding: 15px; margin-bottom: 20px;">
         
-        <div style="display: flex; flex-direction: column; gap: 15px;">
+        <div style="display: flex; flex-direction: column; gap: 15px; align-items: center;">
             <button onclick="goToLeagues()" class="pink-btn" style="font-size: 22px; padding: 15px 45px;">PLAY</button>
             <button onclick="startPvpSetup()" class="gold-btn" style="font-size: 16px; padding: 12px 30px; background: rgba(255,215,0,0.1);">2 PLAYER PVP (FRIENDLY)</button>
+            <!-- Privacy Policy linki əlavə olundu -->
+            <button onclick="switchScreen('screen-privacy')" style="font-size: 13px; padding: 8px 20px; background: transparent; border: 1px solid rgba(255,255,255,0.3); color: #aaa;">Privacy Policy</button>
+        </div>
+    </div>
+
+    <!-- PRIVACY POLICY EKRANI -->
+    <div id="screen-privacy" class="screen">
+        <div class="settings-container" style="max-width: 650px; margin-top: 20px; text-align: left; max-height: 85vh; overflow-y: auto;">
+            <div class="close-settings-btn" onclick="switchScreen('screen-welcome')">✕</div>
+            <h1 style="font-size: 24px; text-align: center; margin-bottom: 15px;">Privacy Policy</h1>
+            <p style="font-size: 12px; color: #aaa; text-align: center;">Last updated: August 2, 2026</p>
+            
+            <p style="font-size: 13px; line-height: 1.6; margin-top: 15px;">
+                At <strong>neonsoccer.site</strong>, we respect the privacy of our visitors. This privacy policy page explains what information is collected on our website.
+            </p>
+
+            <h3 style="font-size: 14px; color: #33ff33; margin-top: 15px;">1. Information Collected:</h3>
+            <p style="font-size: 13px; line-height: 1.6;">
+                Since no user accounts or registrations are required on our site, we do not collect direct personal information such as first name, last name, or phone number from users. When you visit our website, some technical data (such as IP address or browser type) may be automatically collected by your browser.
+            </p>
+
+            <h3 style="font-size: 14px; color: #33ff33; margin-top: 15px;">2. Advertisements and Cookies:</h3>
+            <p style="font-size: 13px; line-height: 1.6;">
+                Third-party advertising providers (such as Google AdSense) may be used on our site. These advertising networks may use cookies to serve ads based on users' previous visits to our website. You can review Google's privacy policy to learn how they use advertising cookies.
+            </p>
+
+            <h3 style="font-size: 14px; color: #33ff33; margin-top: 15px;">3. Contact:</h3>
+            <p style="font-size: 13px; line-height: 1.6;">
+                If you have any questions regarding this privacy policy, you can contact us via email at: <strong>bayramlib56@gmail.com</strong>
+            </p>
+
+            <div style="margin-top: 25px; width: 100%; text-align: center;">
+                <button onclick="switchScreen('screen-welcome')" class="gold-btn">BACK TO MENU</button>
+            </div>
         </div>
     </div>
 
