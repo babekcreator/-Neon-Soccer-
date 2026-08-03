@@ -40,16 +40,18 @@
         h1 { font-size: 34px; font-weight: 900; margin: 15px 0 8px 0; text-align: center; background: linear-gradient(90deg, #33ff33, #00f3ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 0 20px rgba(51, 255, 51, 0.5)); text-transform: uppercase; letter-spacing: 2px;}
         h2 { font-size: 14px; color: #bbb; margin-bottom: 10px; letter-spacing: 1px; text-align: center; text-transform: uppercase;}
 
-        input[type="text"] { background: rgba(255,255,255,0.05); border: 2px solid #33ff33; color: #fff; font-family: 'Orbitron'; font-size: 16px; padding: 12px; border-radius: 8px; text-align: center; outline: none; margin-bottom: 8px; width: 280px; box-shadow: inset 0 0 10px rgba(51,255,51,0.1), 0 0 20px rgba(51,255,51,0.2); transition: 0.3s;}
-        input[type="text"]:focus { background: rgba(51,255,51,0.15); box-shadow: inset 0 0 10px rgba(51,255,51,0.3), 0 0 30px rgba(51,255,51,0.4);}
+        input[type="text"], textarea { background: rgba(255,255,255,0.05); border: 2px solid #33ff33; color: #fff; font-family: 'Orbitron'; font-size: 16px; padding: 12px; border-radius: 8px; text-align: center; outline: none; margin-bottom: 8px; width: 280px; box-shadow: inset 0 0 10px rgba(51,255,51,0.1), 0 0 20px rgba(51,255,51,0.2); transition: 0.3s;}
+        input[type="text"]:focus, textarea:focus { background: rgba(51,255,51,0.15); box-shadow: inset 0 0 10px rgba(51,255,51,0.3), 0 0 30px rgba(51,255,51,0.4);}
+        textarea { text-align: left; resize: none; width: 100%; height: 100px; font-family: sans-serif;}
+
         input[type="range"] { -webkit-appearance: none; width: 100%; background: rgba(255,255,255,0.1); height: 8px; border-radius: 4px; outline: none; margin-bottom: 20px; border: 1px solid #33ff33;}
         input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; background: #33ff33; border-radius: 50%; cursor: pointer; box-shadow: 0 0 15px #33ff33; }
 
-        button { background: rgba(6, 20, 8, 0.85); color: #fff; font-family: 'Orbitron', sans-serif; font-size: 14px; font-weight: 700; letter-spacing: 2px; padding: 10px 22px; margin: 4px; border: 2px solid #33ff33; border-radius: 8px; cursor: pointer; box-shadow: 0 0 15px rgba(51, 255, 51, 0.4); transition: all 0.2s ease-out; text-transform: uppercase; }
-        button:hover { background: #33ff33; color: #000; box-shadow: 0 0 25px rgba(51, 255, 51, 0.9); transform: translateY(-3px); }
+        button, .link-btn { background: rgba(6, 20, 8, 0.85); color: #fff; font-family: 'Orbitron', sans-serif; font-size: 14px; font-weight: 700; letter-spacing: 2px; padding: 10px 22px; margin: 4px; border: 2px solid #33ff33; border-radius: 8px; cursor: pointer; box-shadow: 0 0 15px rgba(51, 255, 51, 0.4); transition: all 0.2s ease-out; text-transform: uppercase; text-decoration: none; display: inline-block; text-align: center;}
+        button:hover, .link-btn:hover { background: #33ff33; color: #000; box-shadow: 0 0 25px rgba(51, 255, 51, 0.9); transform: translateY(-3px); }
         
-        button.pink-btn { border-color: #ff00ea; box-shadow: 0 0 15px rgba(255, 0, 234, 0.4); }
-        button.pink-btn:hover { background: #ff00ea; box-shadow: 0 0 25px rgba(255, 0, 234, 0.9); color: #000; }
+        button.pink-btn, .link-btn.pink-btn { border-color: #ff00ea; box-shadow: 0 0 15px rgba(255, 0, 234, 0.4); }
+        button.pink-btn:hover, .link-btn.pink-btn:hover { background: #ff00ea; box-shadow: 0 0 25px rgba(255, 0, 234, 0.9); color: #000; }
         
         button.gold-btn { border-color: #ffd700; box-shadow: 0 0 15px rgba(255, 215, 0, 0.4); color: #ffd700;}
         button.gold-btn:hover { background: #ffd700; color: #000; box-shadow: 0 0 25px rgba(255, 215, 0, 0.9); }
@@ -63,6 +65,16 @@
         .menu-row { display: flex; gap: 8px; justify-content: center; margin-bottom: 10px; flex-wrap: wrap; }
         .grid-container { display: flex; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; justify-content: center; max-width: 950px; padding: 15px;}
         
+        /* Review System Styles */
+        .stars-container { font-size: 40px; margin-bottom: 15px; display: flex; justify-content: center; gap: 10px; }
+        .star { color: rgba(255,255,255,0.2); cursor: pointer; transition: 0.2s; text-shadow: 0 0 10px rgba(0,0,0,0.5); }
+        .star:hover, .star.active { color: #ffd700; text-shadow: 0 0 15px #ffd700; transform: scale(1.1); }
+        .review-box { width: 100%; background: rgba(0,0,0,0.6); padding: 15px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); margin-top: 10px; text-align: left; }
+        .review-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
+        .review-name { font-weight: bold; font-size: 14px; color: #33ff33; }
+        .review-stars { color: #ffd700; font-size: 14px; }
+        .review-text { font-size: 13px; color: #ddd; font-family: sans-serif; line-height: 1.4; }
+
         .league-card {
             width: 175px; border: 2px solid rgba(51,255,51,0.3); padding: 20px 10px; text-align: center; border-radius: 16px; background: linear-gradient(180deg, rgba(10,30,15,0.9) 0%, rgba(0,0,0,1) 100%); cursor: pointer; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); box-shadow: 0 10px 20px rgba(0,0,0,0.8); display: flex; flex-direction: column; align-items: center; gap: 12px;
         }
@@ -96,23 +108,20 @@
         .res-score { width: 20%; text-align: center; font-size: 18px; font-weight: 900; background: linear-gradient(180deg, #111 0%, #000 100%); border: 2px solid #33ff33; border-radius: 8px; padding: 6px; color: #33ff33; text-shadow: 0 0 10px rgba(51,255,51,0.8); letter-spacing: 2px; box-shadow: 0 0 15px rgba(51,255,51,0.2);}
 
         canvas { 
-            background: #010803; 
-            border-radius: 18px; 
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.95), 0 0 35px rgba(51,255,51,0.2); 
-            width: 100%;
-            max-width: 1000px; 
-            aspect-ratio: 1000 / 600; 
-            display: none; 
-            z-index: 5; 
-            border: 2px solid rgba(255,255,255,0.15); 
-            pointer-events: auto; 
-            touch-action: none; 
+            background: #010803; border-radius: 18px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.95), 0 0 35px rgba(51,255,51,0.2); 
+            width: 100%; max-width: 1000px; max-height: 70vh; aspect-ratio: 1000 / 600; 
+            display: none; z-index: 5; border: 2px solid rgba(255,255,255,0.15); pointer-events: auto; touch-action: none; 
         }
         
+        /* MATCH UI - REDESIGNED FOR MOBILE COMFORT */
         #match-ui { position: absolute; top: 15px; width: 100%; max-width: 1050px; display: none; justify-content: space-between; align-items: flex-start; padding: 0 30px; z-index: 10; pointer-events: none; }
-        .score-box { text-align: center; background: rgba(0,0,0,0.85); padding: 8px 20px; border-radius: 12px; border: 2px solid rgba(255,255,255,0.15); box-shadow: 0 15px 25px rgba(0,0,0,0.7); pointer-events: auto; min-width: 180px;}
-        .player-name { font-size: 13px; font-weight: bold; letter-spacing: 1px; margin-bottom: 4px; display: flex; align-items: center; justify-content: center; gap: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 220px;}
-        .score { font-size: 36px; font-weight: 900; line-height: 1; text-shadow: 0 0 15px rgba(255,255,255,0.6); }
+        
+        .team-col { display: flex; flex-direction: column; align-items: center; gap: 10px; pointer-events: none; }
+        .team-col > * { pointer-events: auto; }
+
+        .score-box { text-align: center; background: linear-gradient(180deg, rgba(20,20,20,0.95) 0%, rgba(0,0,0,0.95) 100%); padding: 10px 20px; border-radius: 16px; border: 2px solid rgba(255,255,255,0.15); box-shadow: 0 10px 30px rgba(0,0,0,0.8); min-width: 170px; backdrop-filter: blur(10px);}
+        .player-name { font-size: 14px; font-weight: 900; letter-spacing: 1px; margin-bottom: 6px; display: flex; align-items: center; justify-content: center; gap: 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 180px; text-transform: uppercase;}
+        .score { font-size: 40px; font-weight: 900; line-height: 1; text-shadow: 0 0 20px rgba(255,255,255,0.5); }
         
         #global-timer-container { position: absolute; top: 20px; left: 50%; transform: translateX(-50%); display: none; flex-direction: column; align-items: center; z-index: 10; pointer-events: none; }
         #global-timer { font-size: 26px; font-weight: 900; color: #fff; text-shadow: 0 0 15px #fff; background: rgba(0,0,0,0.85); padding: 4px 20px; border-radius: 8px; border: 1px solid #333; margin-bottom: 6px; box-shadow: 0 5px 15px rgba(0,0,0,0.6);}
@@ -122,16 +131,14 @@
         #turn-indicator { position: absolute; top: 85px; left: 50%; transform: translateX(-50%); font-size: 16px; letter-spacing: 4px; display: none; z-index: 10; font-weight: 900; background: rgba(0,0,0,0.8); padding: 6px 20px; border-radius: 25px; border: 1px solid rgba(255,255,255,0.15); backdrop-filter: blur(8px); box-shadow: 0 5px 15px rgba(0,0,0,0.5); pointer-events: none; }
         #message-overlay { position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%); font-size: 50px; font-weight: 900; text-align: center; z-index: 20; text-shadow: 0 0 25px #fff; color: #fff; display: none; background: rgba(0,0,0,0.7); padding: 20px 40px; border-radius: 20px; border: 2px solid rgba(255,255,255,0.25); backdrop-filter: blur(8px); box-shadow: 0 20px 40px rgba(0,0,0,0.8); pointer-events: none; white-space: nowrap;}
         
-        #powerup-container { position: absolute; bottom: 20px; left: 25px; z-index: 20; display: none; pointer-events: none; }
         .super-profile-btn { width: 55px; height: 55px; background: radial-gradient(circle, #ff3333 0%, #660000 100%); border: 3px solid #ff3333; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; cursor: pointer; box-shadow: 0 0 20px rgba(255,51,51,0.7); transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); pointer-events: auto; }
         .super-profile-btn:hover { transform: scale(1.15); box-shadow: 0 0 35px rgba(255,51,51,1); }
         .super-profile-btn.disabled { opacity: 0.3; filter: grayscale(1); pointer-events: none; box-shadow: none; }
 
-        .emoji-container { position: absolute; bottom: 20px; right: 25px; z-index: 25; display: none; pointer-events: none; }
-        .emoji-toggle-btn { width: 55px; height: 55px; background: rgba(0,0,0,0.85); border: 2px solid #33ff33; border-radius: 50%; font-size: 24px; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 0 15px rgba(51,255,51,0.4); transition: 0.2s; pointer-events: auto; }
+        .emoji-toggle-btn { width: 55px; height: 55px; background: rgba(0,0,0,0.85); border: 2px solid #33ff33; border-radius: 50%; font-size: 24px; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 0 15px rgba(51,255,51,0.4); transition: 0.2s; pointer-events: auto; position: relative;}
         .emoji-toggle-btn:hover { background: #33ff33; color: #000; transform: scale(1.1); box-shadow: 0 0 25px #33ff33; }
         
-        .emoji-popup { position: absolute; bottom: 70px; right: 0; background: rgba(0,0,0,0.95); border: 2px solid #33ff33; border-radius: 16px; padding: 10px; display: none; grid-template-columns: repeat(4, 1fr); gap: 8px; backdrop-filter: blur(10px); box-shadow: 0 10px 30px rgba(0,0,0,0.9); pointer-events: auto; }
+        .emoji-popup { position: absolute; top: 65px; right: 0; background: rgba(0,0,0,0.95); border: 2px solid #33ff33; border-radius: 16px; padding: 10px; display: none; grid-template-columns: repeat(4, 1fr); gap: 8px; backdrop-filter: blur(10px); box-shadow: 0 10px 30px rgba(0,0,0,0.9); pointer-events: auto; z-index: 100;}
         .emoji-popup.active { display: grid; }
         .popup-emoji { font-size: 22px; cursor: pointer; width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: 0.2s; background: rgba(255,255,255,0.05); }
         .popup-emoji:hover { background: #33ff33; transform: scale(1.15); }
@@ -144,6 +151,19 @@
         .save-slot .details { text-align: left; }
         .save-slot .slot-title { font-weight: bold; font-size: 16px; color: #fff; margin-bottom: 4px; }
         .save-slot .slot-info { font-size: 12px; color: #aaa; }
+
+        /* Media Queries for Mobile Comfort */
+        @media (max-width: 768px) {
+            .score-box { min-width: 120px; padding: 8px; border-radius: 12px; }
+            .player-name { font-size: 11px; max-width: 110px; gap: 4px; }
+            .score { font-size: 28px; }
+            .super-profile-btn, .emoji-toggle-btn { width: 45px; height: 45px; font-size: 20px; border-width: 2px; }
+            #match-ui { padding: 0 10px; top: 10px; }
+            #global-timer-container { top: 10px; transform: scale(0.85) translateX(-60%); }
+            #turn-indicator { top: 65px; font-size: 12px; padding: 4px 15px; }
+            .team-col { gap: 6px; }
+            .emoji-popup { right: -20px; }
+        }
     </style>
 </head>
 <body>
@@ -164,17 +184,50 @@
         <h1 style="margin-top:5vh; font-size: 42px;">NEON SOCCER</h1>
         <h2 style="color:#00f3ff; margin-bottom: 30px; letter-spacing: 3px;">PRO MANAGER ULTIMATE 4V4</h2>
         
-        <input type="text" id="manager-name-input" value="" placeholder="Manager Name" style="width: 350px; font-size: 18px; font-weight: bold; padding: 15px; margin-bottom: 25px;">
+        <input type="text" id="manager-name-input" value="" placeholder="Manager Name" style="width: 350px; max-width: 90%; font-size: 18px; font-weight: bold; padding: 15px; margin-bottom: 25px;">
         
-        <div style="display: flex; flex-direction: column; gap: 15px; align-items: center; width: 350px;">
+        <div style="display: flex; flex-direction: column; gap: 15px; align-items: center; width: 350px; max-width: 90%;">
             <button onclick="goToLeagues()" class="pink-btn" style="font-size: 22px; padding: 15px; width: 100%;">NEW CAREER</button>
             <button onclick="openSaveLoadUI('load')" class="blue-btn" style="font-size: 18px; padding: 15px; width: 100%;">LOAD GAME</button>
             <button onclick="startPvpSetup()" class="gold-btn" style="font-size: 16px; padding: 12px; width: 100%; background: rgba(255,215,0,0.1);">2 PLAYER PVP (FRIENDLY)</button>
             
-            <div class="menu-row" style="margin-top: 20px; gap: 20px;">
-                <button onclick="switchScreen('screen-patchnotes')" style="font-size: 13px; padding: 8px 20px; background: transparent; border: 1px solid rgba(255,255,255,0.3); color: #aaa;">Patch Notes</button>
-                <button onclick="switchScreen('screen-privacy')" style="font-size: 13px; padding: 8px 20px; background: transparent; border: 1px solid rgba(255,255,255,0.3); color: #aaa;">Privacy Policy</button>
+            <div style="width: 100%; height: 1px; background: rgba(255,255,255,0.2); margin: 10px 0;"></div>
+            
+            <!-- Rate & Sponsor Buttons -->
+            <button onclick="switchScreen('screen-reviews')" class="gold-btn" style="width: 100%; font-size: 15px;">⭐ RATE & FEEDBACK</button>
+            <a href="mailto:bayramlib56@gmail.com" class="link-btn pink-btn" style="width: 100%; font-size: 15px; background: rgba(255,0,234,0.1);">💖 SUPPORT / SPONSOR</a>
+
+            <div class="menu-row" style="margin-top: 10px; gap: 20px;">
+                <button onclick="switchScreen('screen-patchnotes')" style="font-size: 12px; padding: 6px 15px; background: transparent; border: 1px solid rgba(255,255,255,0.3); color: #aaa;">Patch Notes</button>
+                <button onclick="switchScreen('screen-privacy')" style="font-size: 12px; padding: 6px 15px; background: transparent; border: 1px solid rgba(255,255,255,0.3); color: #aaa;">Privacy Policy</button>
             </div>
+        </div>
+    </div>
+
+    <!-- REVIEWS & FEEDBACK SCREEN -->
+    <div id="screen-reviews" class="screen">
+        <div class="modal-container" style="max-width: 600px; margin-top: 20px; max-height: 85vh; overflow-y: auto;">
+            <div class="close-settings-btn" onclick="switchScreen('screen-welcome')">✕</div>
+            <h1 style="font-size: 24px; color: #ffd700;">USER REVIEWS</h1>
+            <h2 style="margin-bottom: 20px;">Leave your feedback or report bugs</h2>
+            
+            <div class="stars-container" id="star-rating-ui">
+                <span class="star" onclick="setRating(1)">★</span>
+                <span class="star" onclick="setRating(2)">★</span>
+                <span class="star" onclick="setRating(3)">★</span>
+                <span class="star" onclick="setRating(4)">★</span>
+                <span class="star" onclick="setRating(5)">★</span>
+            </div>
+            
+            <textarea id="review-input" placeholder="Write your complaint, suggestion, or review here... (Google Play Style)"></textarea>
+            
+            <button onclick="submitReview()" class="gold-btn" style="width: 100%; margin-top: 10px;">SUBMIT FEEDBACK</button>
+            
+            <div style="width: 100%; height: 1px; background: rgba(255,255,255,0.2); margin: 25px 0 15px 0;"></div>
+            
+            <h2 style="text-align: left; width: 100%; color: #fff;">RECENT REVIEWS</h2>
+            <!-- Bu siyahı tamamilə boşdur, yalnız rəy göndərildikdə JS vasitəsilə bura əlavə olunacaq -->
+            <div id="reviews-list" style="width: 100%;"></div>
         </div>
     </div>
 
@@ -192,16 +245,13 @@
         <div class="modal-container" style="max-width: 650px; margin-top: 20px; text-align: left; max-height: 85vh; overflow-y: auto;">
             <div class="close-settings-btn" onclick="switchScreen('screen-welcome')">✕</div>
             <h1 style="font-size: 24px; text-align: center; margin-bottom: 15px;">LATEST UPDATES</h1>
-            <p style="font-size: 12px; color: #33ff33; text-align: center; margin-bottom: 20px;">Version 2.1 (August 3, 2026)</p>
+            <p style="font-size: 12px; color: #33ff33; text-align: center; margin-bottom: 20px;">Version 2.2 (Mobile UI & Feedback Update)</p>
             
             <ul style="font-size: 14px; line-height: 1.8; color: #eee; padding-left: 20px;">
-                <li><strong style="color:#00f3ff;">Pitch Expansion:</strong> The stadium pitch has been expanded for more tactical passing and movement.</li>
-                <li><strong style="color:#ff00ea;">Dynamic Match Weeks:</strong> League schedules are now fully randomized every season. No more repetitive first matchdays!</li>
-                <li><strong style="color:#ffd700;">League Formats:</strong> Azerbaijan League now plays 3 rounds for an extended fierce competition. Other major leagues play 2 rounds.</li>
-                <li><strong style="color:#33ff33;">Save System:</strong> Added a 5-slot save and load system. Save your career anytime from the Settings menu!</li>
-                <li><strong style="color:#ff3333;">Kick-off Rule:</strong> Direct shots from the center at kick-off that go straight into the goal are now counted as a FOUL.</li>
-                <li><strong style="color:#fff;">Sim Results Update:</strong> Instant SIM matches now have realistic 3-goal limits (no ties at 3-3) and results appear in the League Results table directly.</li>
-                <li><strong style="color:#fff;">AI & Emoji Tweaks:</strong> Fixed AI freezing bug after pausing. AI will now use emojis more logically to taunt, while auto-emojis after every goal have been removed. PVP emojis are disabled.</li>
+                <li><strong style="color:#00f3ff;">Mobile UI Overhaul:</strong> Team names and action buttons (Fire/Chat) are now cleanly organized in columns for a much better mobile experience!</li>
+                <li><strong style="color:#ffd700;">Feedback System:</strong> Added a Google Play style review section to submit bug reports and ratings.</li>
+                <li><strong style="color:#ff00ea;">Sponsor/Support:</strong> Added direct email contact for sponsorships.</li>
+                <li><strong style="color:#33ff33;">Save System:</strong> Save your career anytime from the Settings menu!</li>
             </ul>
             <div style="margin-top: 25px; width: 100%; text-align: center;">
                 <button onclick="switchScreen('screen-welcome')" class="gold-btn">BACK TO MENU</button>
@@ -214,7 +264,7 @@
         <div class="modal-container" style="max-width: 650px; margin-top: 20px; text-align: left; max-height: 85vh; overflow-y: auto;">
             <div class="close-settings-btn" onclick="switchScreen('screen-welcome')">✕</div>
             <h1 style="font-size: 24px; text-align: center; margin-bottom: 15px;">Privacy Policy</h1>
-            <p style="font-size: 12px; color: #aaa; text-align: center;">Last updated: August 3, 2026</p>
+            <p style="font-size: 12px; color: #aaa; text-align: center;">Last updated: August 2026</p>
             
             <p style="font-size: 13px; line-height: 1.6; margin-top: 15px;">
                 At <strong>neonsoccer.site</strong>, we respect the privacy of our visitors. This privacy policy page explains what information is collected on our website.
@@ -222,15 +272,10 @@
 
             <h3 style="font-size: 14px; color: #33ff33; margin-top: 15px;">1. Information Collected:</h3>
             <p style="font-size: 13px; line-height: 1.6;">
-                Since no user accounts or registrations are required on our site, we do not collect direct personal information such as first name, last name, or phone number from users. When you visit our website, some technical data (such as IP address or browser type) may be automatically collected by your browser.
+                Since no user accounts or registrations are required on our site, we do not collect direct personal information such as first name, last name, or phone number from users.
             </p>
 
-            <h3 style="font-size: 14px; color: #33ff33; margin-top: 15px;">2. Advertisements and Cookies:</h3>
-            <p style="font-size: 13px; line-height: 1.6;">
-                Third-party advertising providers (such as Google AdSense) may be used on our site. These advertising networks may use cookies to serve ads based on users' previous visits to our website. You can review Google's privacy policy to learn how they use advertising cookies.
-            </p>
-
-            <h3 style="font-size: 14px; color: #33ff33; margin-top: 15px;">3. Contact:</h3>
+            <h3 style="font-size: 14px; color: #33ff33; margin-top: 15px;">2. Contact:</h3>
             <p style="font-size: 13px; line-height: 1.6;">
                 If you have any questions regarding this privacy policy, you can contact us via email at: <strong>bayramlib56@gmail.com</strong>
             </p>
@@ -427,43 +472,52 @@
         <button onclick="simulateRestOfWeek()" class="pink-btn" style="font-size: 18px; padding: 15px 40px;">NEXT</button>
     </div>
 
-    <!-- MATCH UI -->
+    <!-- NEW MATCH UI -->
     <div id="match-ui">
-        <div class="score-box" id="ui-home-box">
-            <div class="player-name" id="ui-home-name">PLAYER</div>
-            <div class="score" id="scoreLeft">0</div>
+        
+        <!-- Home Team Column -->
+        <div class="team-col" id="col-home">
+            <div class="score-box" id="ui-home-box">
+                <div class="player-name" id="ui-home-name">PLAYER</div>
+                <div class="score" id="scoreLeft">0</div>
+            </div>
+            <div id="powerup-container">
+                <div id="btn-powerup" class="super-profile-btn" onclick="activateSuperShot()" title="Super Shot">🔥</div>
+            </div>
         </div>
-        <div class="score-box" style="color:#ff00ea; border-color:#ff00ea;">
-            <div class="player-name" id="ui-away-name">AI RIVAL</div>
-            <div class="score" id="scoreRight">0</div>
+
+        <!-- Timer Center -->
+        <div id="global-timer-container">
+            <div id="global-timer">2:00</div>
+            <div id="timer-bar-container"><div id="timer-bar"></div></div>
         </div>
-    </div>
-    
-    <div id="global-timer-container">
-        <div id="global-timer">2:00</div>
-        <div id="timer-bar-container"><div id="timer-bar"></div></div>
+        
+        <!-- Away Team Column -->
+        <div class="team-col" id="col-away">
+            <div class="score-box" id="ui-away-box" style="color:#ff00ea; border-color:#ff00ea;">
+                <div class="player-name" id="ui-away-name">AI RIVAL</div>
+                <div class="score" id="scoreRight">0</div>
+            </div>
+            <div class="emoji-container" id="emojis">
+                <div class="emoji-toggle-btn" onclick="toggleEmojiPopup()">💬
+                    <div class="emoji-popup" id="emojiPopup">
+                        <div class="popup-emoji" onclick="sendEmoji('😀', event)">😀</div>
+                        <div class="popup-emoji" onclick="sendEmoji('😭', event)">😭</div>
+                        <div class="popup-emoji" onclick="sendEmoji('😡', event)">😡</div>
+                        <div class="popup-emoji" onclick="sendEmoji('🎯', event)">🎯</div>
+                        <div class="popup-emoji" onclick="sendEmoji('🔥', event)">🔥</div>
+                        <div class="popup-emoji" onclick="sendEmoji('😎', event)">😎</div>
+                        <div class="popup-emoji" onclick="sendEmoji('👏', event)">👏</div>
+                        <div class="popup-emoji" onclick="sendEmoji('👑', event)">👑</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
     </div>
     
     <div id="turn-indicator">YOUR TURN</div>
     <div id="message-overlay">FOUL!</div>
-
-    <div id="powerup-container">
-        <div id="btn-powerup" class="super-profile-btn" onclick="activateSuperShot()" title="Super Shot">🔥</div>
-    </div>
-
-    <div class="emoji-container" id="emojis">
-        <div class="emoji-toggle-btn" onclick="toggleEmojiPopup()">💬</div>
-        <div class="emoji-popup" id="emojiPopup">
-            <div class="popup-emoji" onclick="sendEmoji('😀')">😀</div>
-            <div class="popup-emoji" onclick="sendEmoji('😭')">😭</div>
-            <div class="popup-emoji" onclick="sendEmoji('😡')">😡</div>
-            <div class="popup-emoji" onclick="sendEmoji('🎯')">🎯</div>
-            <div class="popup-emoji" onclick="sendEmoji('🔥')">🔥</div>
-            <div class="popup-emoji" onclick="sendEmoji('😎')">😎</div>
-            <div class="popup-emoji" onclick="sendEmoji('👏')">👏</div>
-            <div class="popup-emoji" onclick="sendEmoji('👑')">👑</div>
-        </div>
-    </div>
     
     <div id="chat-bubble-p1" class="chat-bubble" style="left:20%; top:30%;"></div>
     <div id="chat-bubble-p2" class="chat-bubble" style="right:20%; top:30%;"></div>
@@ -471,6 +525,43 @@
     <canvas id="gameCanvas" width="1000" height="600"></canvas>
 
     <script>
+        // --- REVIEW SYSTEM LOGIC ---
+        let currentRating = 0;
+        function setRating(val) {
+            currentRating = val;
+            let stars = document.querySelectorAll('#star-rating-ui .star');
+            stars.forEach((s, index) => {
+                if (index < val) s.classList.add('active');
+                else s.classList.remove('active');
+            });
+        }
+
+        function submitReview() {
+            let text = document.getElementById('review-input').value.trim();
+            if (currentRating === 0) { alert("Please select a star rating!"); return; }
+            if (text === "") { alert("Please write a comment!"); return; }
+            
+            let list = document.getElementById('reviews-list');
+            let starString = "★".repeat(currentRating) + "☆".repeat(5 - currentRating);
+            let name = document.getElementById('manager-name-input').value.trim() || "GuestManager";
+            
+            let newReview = `
+                <div class="review-box" style="border-color: #33ff33; animation: fadeIn 0.5s;">
+                    <div class="review-header">
+                        <span class="review-name">${name}</span>
+                        <span class="review-stars">${starString}</span>
+                    </div>
+                    <div class="review-text">${text}</div>
+                </div>
+            `;
+            
+            list.insertAdjacentHTML('afterbegin', newReview);
+            document.getElementById('review-input').value = "";
+            setRating(0);
+            alert("Thank you for your feedback! It helps us improve the game.");
+        }
+
+        // --- ORIGINAL GAME LOGIC ---
         const LEAGUES = {
             eng: { 
                 name: "Premier League", flagImg: "https://flagcdn.com/w80/gb-eng.png", 
@@ -609,13 +700,10 @@
                 document.getElementById('match-ui').style.display = 'none';
                 document.getElementById('global-timer-container').style.display = 'none';
                 document.getElementById('turn-indicator').style.display = 'none';
-                document.getElementById('emojis').style.display = 'none';
-                document.getElementById('powerup-container').style.display = 'none';
-                canvas.style.display = 'none';
                 document.getElementById('match-settings-btn').classList.remove('active');
+                canvas.style.display = 'none';
             }
             
-            // Hide save button if in PVP mode
             document.getElementById('btn-save-game').style.display = (isPVP || !pData.team) ? 'none' : 'block';
 
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -629,14 +717,13 @@
                 document.getElementById('match-ui').style.display = 'flex'; 
                 document.getElementById('global-timer-container').style.display = 'flex'; 
                 document.getElementById('turn-indicator').style.display = 'block'; 
-                document.getElementById('emojis').style.display = (isPVP ? 'none' : 'block'); 
-                document.getElementById('powerup-container').style.display = 'block';
+                if(isPVP) { document.getElementById('emojis').style.display = 'none'; }
                 document.getElementById('match-settings-btn').classList.add('active');
                 canvas.style.display = 'block';
                 isMatchRunning = true;
                 lastTs = performance.now();
                 if(!loopId) loopId = requestAnimationFrame(loop);
-                if(cTurn === 'pink' && !isPVP) triggerAI(); // Retrigger AI if it was interrupted
+                if(cTurn === 'pink' && !isPVP) triggerAI();
             } else {
                 inMatchMode = false;
                 document.getElementById('match-settings-btn').classList.remove('active');
@@ -653,8 +740,6 @@
             document.getElementById('match-ui').style.display = 'none'; 
             document.getElementById('global-timer-container').style.display = 'none'; 
             document.getElementById('turn-indicator').style.display = 'none'; 
-            document.getElementById('emojis').style.display = 'none'; 
-            document.getElementById('powerup-container').style.display = 'none';
             document.getElementById('match-settings-btn').classList.remove('active');
             canvas.style.display = 'none';
             switchScreen('screen-welcome');
@@ -926,7 +1011,6 @@
             } else if (pvpStep === 3) {
                 pvpTeam2 = selectedClub; startMatch(); 
             } else {
-                // Reset stats for new career
                 pData.coins = 500; pData.fans = 0; pData.xp = 0; pData.level = 1; pData.cups = 0; pData.totalWins = 0; 
                 pData.skillPoints = 0; pData.coinBonusLvl = 0; pData.superBoostLvl = 0; pData.speedBuff = 1.0; pData.keeperBuff = 1.0;
                 ownedTacs = ['diamond', 'defensive']; activeStadium = 'classic'; ownedStadiums = ['classic']; cTac = 'diamond';
@@ -971,17 +1055,16 @@
             let idCounter = 1;
             lData.forEach(team => { if(team.n !== pData.team) league.push({id: idCounter++, name: team.n, logoHtml: createClubEmblem(team), c: team.c, p:0, w:0, d:0, l:0, pts:0, gf:0, ga:0}); });
             
-            // Randomize schedule mapping
             let teamIds = league.map(t => t.id);
             shuffle(teamIds);
             
             let baseRounds = generateRoundRobin(teamIds);
-            let multiplier = (selectedLeagueId === 'aze') ? 3 : 2; // Azerbaijan 3 rounds, others 2
+            let multiplier = (selectedLeagueId === 'aze') ? 3 : 2; 
             scheduleMatrix = [];
             
             for(let i=0; i<multiplier; i++) {
                 let roundCopy = JSON.parse(JSON.stringify(baseRounds));
-                if(i % 2 !== 0) roundCopy.forEach(wk => wk.forEach(match => match.reverse())); // Swap home/away
+                if(i % 2 !== 0) roundCopy.forEach(wk => wk.forEach(match => match.reverse()));
                 scheduleMatrix = scheduleMatrix.concat(roundCopy);
             }
             totalWeeks = scheduleMatrix.length;
@@ -1050,7 +1133,6 @@
         
         function activateSuperShot() { if(state === 'idle' && powerups[cTurn] > 0) { activeSuper[cTurn] = true; powerups[cTurn]--; playSound('powerup'); updateUI(); } }
         
-        // Better SIM Logic
         function generateSimScore(powerAdvantage) {
             let s = 0; let r = Math.random() + powerAdvantage;
             if(r > 0.5) s = 1; if(r > 1.2) s = 2; if(r > 1.7) s = 3;
@@ -1059,16 +1141,10 @@
 
         function simInstantMatch() {
             let t1 = league.find(t=>t.id===0), t2 = league.find(t=>t.id===oppId);
-            
-            // Player vs AI SIM logic
-            let pAdv = ((pData.speedBuff - 1.0) + (pData.keeperBuff - 1.0)) * 0.5; // Advantage scale
+            let pAdv = ((pData.speedBuff - 1.0) + (pData.keeperBuff - 1.0)) * 0.5; 
             let s1 = generateSimScore(pAdv);
-            let s2 = generateSimScore(0); // AI standard
-            
-            // Prevent 3-3 ties
-            if (s1 === 3 && s2 === 3) {
-                if (Math.random() > 0.5) s1 = 2; else s2 = 2;
-            }
+            let s2 = generateSimScore(0); 
+            if (s1 === 3 && s2 === 3) { if (Math.random() > 0.5) s1 = 2; else s2 = 2; }
 
             t1.p++; t2.p++; t1.gf+=s1; t1.ga+=s2; t2.gf+=s2; t2.ga+=s1;
             let win = s1 > s2, draw = s1 === s2;
@@ -1078,13 +1154,11 @@
             if(win) { t1.w++; t1.pts+=3; t2.l++; pData.totalWins++; pData.fans+=100; addXP(50); } else if(draw) { t1.d++; t2.d++; t1.pts++; t2.pts++; pData.fans+=30; addXP(10); } else { t2.w++; t2.pts+=3; t1.l++; addXP(5); }
             
             updateTopBar();
-            // Pass the player's result directly to the weekly simulation display
             simulateRestOfWeek({s1, s2, t1, t2, rewCoins});
         }
 
         // --- MATCH ENGINE ---
         const canvas = document.getElementById('gameCanvas'); const ctx = canvas.getContext('2d');
-        // PITCH EXPANSION
         const P_LEFT=100, P_RIGHT=900, P_TOP=60, P_BOTTOM=540, G_TOP=220, G_BOTTOM=380, POST_RADIUS=9;
         
         let FRIC = 0.975;
@@ -1114,8 +1188,8 @@
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             inMatchMode = true; previousScreenId = ''; 
             document.getElementById('match-ui').style.display='flex'; document.getElementById('global-timer-container').style.display='flex'; document.getElementById('turn-indicator').style.display='block'; 
-            document.getElementById('emojis').style.display = (isPVP ? 'none' : 'block'); // Disable emojis in PVP
-            document.getElementById('powerup-container').style.display='block'; canvas.style.display='block';
+            if(!isPVP) { document.getElementById('emojis').style.display = 'block'; }
+            canvas.style.display='block';
             document.getElementById('topBar').classList.remove('active');
             document.getElementById('match-settings-btn').classList.add('active');
             
@@ -1141,8 +1215,8 @@
             document.getElementById('ui-home-box').style.borderColor = p1Color;
 
             document.getElementById('ui-away-name').innerHTML = `<div style="display:inline-flex; vertical-align:middle; transform:scale(0.4); margin:-16px;">${p2LogoHtml}</div> ${p2Name}`;
-            document.getElementById('ui-away-name').parentElement.style.color = p2Color;
-            document.getElementById('ui-away-name').parentElement.style.borderColor = p2Color;
+            document.getElementById('ui-away-box').style.color = p2Color;
+            document.getElementById('ui-away-box').style.borderColor = p2Color;
             
             mScores={left:0, right:0}; mStats={uShots:0, uTime:0, aTime:0}; document.getElementById('scoreLeft').innerText='0'; document.getElementById('scoreRight').innerText='0';
             shots=0; cTurn=startingTurn; state='idle'; globalTimeLeft=120; turnTimeLeft=10; turnTimerAct=true; isKickoff = true;
@@ -1152,7 +1226,6 @@
             entities.push(new Disk(P_RIGHT,G_TOP,POST_RADIUS,Infinity,'#fff','post')); entities.push(new Disk(P_RIGHT,G_BOTTOM,POST_RADIUS,Infinity,'#fff','post'));
             entities.push(new Disk(500,300,16,1.0,'#fff','ball'));
 
-            // Adjusted starting positions for wider pitch
             let bPos = [{x:280,y:300},{x:220,y:180},{x:220,y:420},{x:140,y:300}]; 
             let rPos = [{x:720,y:300},{x:780,y:180},{x:780,y:420},{x:860,y:300}]; 
             
@@ -1174,7 +1247,8 @@
             if(loopId) cancelAnimationFrame(loopId); loop(performance.now());
         }
 
-        function sendEmoji(e) { 
+        function sendEmoji(e, ev) { 
+            if(ev) ev.stopPropagation();
             showChatBubble('p1', e); 
             playEmojiSound(e); 
             document.getElementById('emojiPopup').classList.remove('active'); 
@@ -1184,7 +1258,6 @@
         function resolveCollisions(d1, d2) {
             if(d1.type==='post' && d2.type==='post') return; const dx=d1.x-d2.x, dy=d1.y-d2.y, dist=Math.hypot(dx,dy);
             if(dist < d1.r+d2.r) {
-                // If ball touches any post or player, it's no longer a direct kick-off
                 if(d1.type==='ball' || d2.type==='ball') isKickoff = false;
 
                 const nx=dx/dist, ny=dy/dist, over=d1.r+d2.r-dist;
@@ -1227,8 +1300,6 @@
 
         function scoreGoal(team) {
             if(state==='goal' || state==='gameover') return;
-            
-            // Kick-off foul rule check
             if (isKickoff) {
                 state='goal'; turnTimerAct=false;
                 playSound('foul'); showMsg("FOUL! INDIRECT KICKOFF", "#ff3333");
@@ -1276,7 +1347,6 @@
             aiTimeoutId = setTimeout(()=>{
                 if(state!=='idle' || !isMatchRunning) return;
                 
-                // Occasional AI Emojis to keep it lively
                 if(Math.random() < 0.15 && !isPVP) {
                     let emotes = ['😡','🎯','🔥','😎'];
                     showChatBubble('p2', emotes[Math.floor(Math.random()*emotes.length)]);
@@ -1357,7 +1427,6 @@
             ctx.fillStyle = bgCol; ctx.fillRect(0, 0, canvas.width, canvas.height);
             let pitchCol = activeStadium === 'sunset' ? '#261400' : (activeStadium === 'matrix' ? '#002206' : '#042208'); 
             
-            // Linear Gradient for pitch to look more polished
             let grd = ctx.createLinearGradient(P_LEFT, P_TOP, P_RIGHT, P_BOTTOM);
             grd.addColorStop(0, pitchCol);
             grd.addColorStop(1, activeStadium === 'matrix' ? '#001103' : '#021104');
@@ -1385,7 +1454,7 @@
             document.getElementById('match-settings-btn').classList.remove('active');
 
             if(isPVP) {
-                document.getElementById('match-ui').style.display='none'; document.getElementById('global-timer-container').style.display='none'; document.getElementById('turn-indicator').style.display='none'; document.getElementById('emojis').style.display='none'; document.getElementById('powerup-container').style.display='none'; canvas.style.display='none';
+                document.getElementById('match-ui').style.display='none'; document.getElementById('global-timer-container').style.display='none'; document.getElementById('turn-indicator').style.display='none'; canvas.style.display='none';
                 switchScreen('screen-welcome');
                 alert(win ? pvpTeam1.n + " WINS!" : (draw ? "DRAW!" : pvpTeam2.n + " WINS!"));
                 return;
@@ -1400,7 +1469,7 @@
             
             if(win){ t1.w++; t1.pts+=3; t2.l++; pData.fans += 100; addXP(50); document.getElementById('match-header').innerText="VICTORY!"; document.getElementById('match-header').style.color="#33ff33";} else if(draw){ t1.d++; t2.d++; t1.pts++; t2.pts++; pData.fans += 30; addXP(10); document.getElementById('match-header').innerText="DRAW"; document.getElementById('match-header').style.color="#ffd700";} else { t2.w++; t2.pts+=3; t1.l++; addXP(5); document.getElementById('match-header').innerText="DEFEAT"; document.getElementById('match-header').style.color="#ff3333";}
             
-            document.getElementById('match-ui').style.display='none'; document.getElementById('global-timer-container').style.display='none'; document.getElementById('turn-indicator').style.display='none'; document.getElementById('emojis').style.display='none'; document.getElementById('powerup-container').style.display='none'; canvas.style.display='none';
+            document.getElementById('match-ui').style.display='none'; document.getElementById('global-timer-container').style.display='none'; document.getElementById('turn-indicator').style.display='none'; canvas.style.display='none';
             document.getElementById('match-result-text').innerText = `${t1.name} ${mScores.left} - ${mScores.right} ${t2.name}`;
             document.getElementById('match-pts-text').innerText = win?"+3 LEAGUE POINTS":(draw?"+1 LEAGUE POINT":"0 POINTS"); document.getElementById('match-rewards-text').innerText = `+${rewCoins} 🪙 | +XP`;
             switchScreen('screen-post-match');
@@ -1411,7 +1480,6 @@
             if(isPlayoff) { proceedSeasonFlow(); return; }
             currentWeekResults = [];
             
-            // Add Player's match to top if simulated
             if(playerMatchInfo) {
                 currentWeekResults.push(`
                     <div class="res-row highlight">
@@ -1423,7 +1491,7 @@
             }
 
             scheduleMatrix[cWeek].forEach(pair => {
-                if(pair[0] === 0 || pair[1] === 0) return; // Player match already calculated
+                if(pair[0] === 0 || pair[1] === 0) return;
                 let t1 = league.find(t=>t.id===pair[0]), t2 = league.find(t=>t.id===pair[1]);
                 if(t1 && t2) { 
                     let s1 = generateSimScore(0);
