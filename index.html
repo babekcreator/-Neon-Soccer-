@@ -178,6 +178,7 @@
         </div>
     </div>
 
+    <!-- Match Setting Button is shown during Match Mode -->
     <div class="settings-btn" id="match-settings-btn" onclick="openSettings()">⚙️</div>
 
     <!-- MAIN MENU -->
@@ -267,10 +268,12 @@
         <div class="modal-container" style="max-width: 650px; margin-top: 20px; text-align: left; max-height: 85vh; overflow-y: auto;">
             <div class="close-settings-btn" onclick="switchScreen('screen-welcome')">✕</div>
             <h1 style="font-size: 24px; text-align: center; margin-bottom: 15px;">LATEST UPDATES</h1>
-            <p style="font-size: 12px; color: #33ff33; text-align: center; margin-bottom: 20px;">Version 2.5 (Bug Fixes & Privacy Update)</p>
+            <p style="font-size: 12px; color: #33ff33; text-align: center; margin-bottom: 20px;">Version 2.6 (Online Sync & Stability Update)</p>
             <ul style="font-size: 14px; line-height: 1.8; color: #eee; padding-left: 20px;">
-                <li><strong style="color:#00f3ff;">Back Button Fix:</strong> The 'Back' button in League select now correctly navigates you to the Main Menu or previous PVP step.</li>
-                <li><strong style="color:#ffd700;">Softer Goal Sound:</strong> The loud/piercing sound effect during a goal has been replaced with a gentle, satisfying retro chime.</li>
+                <li><strong style="color:#00f3ff;">Online Timer Sync Fix:</strong> Match timer now continues accurately for both players even if one enters the settings menu during a live match. The settings menu simply blurs the screen while the game stays active in the background.</li>
+                <li><strong style="color:#ffd700;">Turn Skipping Fix:</strong> Fixed a major desync bug that caused the client's turn to skip instantly on mobile devices when playing online. Now the server perfectly validates the turn change.</li>
+                <li><strong style="color:#ff3333;">Back Button Fix:</strong> The 'Back' button in League select now correctly navigates you to the Main Menu or previous PVP step.</li>
+                <li><strong style="color:#33ff33;">Softer Goal Sound:</strong> The loud/piercing sound effect during a goal has been replaced with a gentle, satisfying retro chime.</li>
                 <li><strong style="color:#ff00ea;">AdSense Privacy Policy:</strong> Restored the official Google AdSense-compliant Privacy Policy for proper site verification.</li>
             </ul>
             <div style="margin-top: 25px; width: 100%; text-align: center;">
@@ -631,7 +634,7 @@
                 if(d) { if(data.isSuper) d.isSuper = true; d.vx = data.vx; d.vy = data.vy; playSound('kick'); shots++; mStats.uShots++; state='moving'; turnTimerAct=false; }
             } else if(data.type === 'sync_turn') {
                 if(!isHost) {
-                    cTurn = data.cTurn; turnTimeLeft = 10; turnTimerAct = true; updateUI();
+                    cTurn = data.cTurn; turnTimeLeft = 10; turnTimerAct = true; state = 'idle'; updateUI();
                     data.entities.forEach((ed, i) => { if(entities[i]) { entities[i].x = ed.x; entities[i].y = ed.y; entities[i].vx = ed.vx; entities[i].vy = ed.vy; } });
                     mScores = data.mScores; document.getElementById('scoreLeft').innerText=mScores.left; document.getElementById('scoreRight').innerText=mScores.right;
                 }
@@ -674,7 +677,9 @@
         let aiTimeoutId = null, saveMode = '';
 
         function switchScreen(id) { 
-            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active')); 
+            document.querySelectorAll('.screen').forEach(s => {
+                if (s.id !== 'screen-settings' && s.id !== 'screen-saveload') s.classList.remove('active');
+            }); 
             if(id) { if(id !== 'screen-settings' && id !== 'screen-saveload') previousScreenId = id; document.getElementById(id).classList.add('active'); activeScreenId = id; }
             let topBar = document.getElementById('topBar'); let matchSettingsBtn = document.getElementById('match-settings-btn');
             if (id === 'screen-hub') { topBar.classList.add('active'); matchSettingsBtn.classList.remove('active'); } else if (inMatchMode) { topBar.classList.remove('active'); matchSettingsBtn.classList.add('active'); } else { topBar.classList.remove('active'); matchSettingsBtn.classList.remove('active'); }
@@ -683,23 +688,33 @@
         function openSettings() {
             let currentActive = document.querySelector('.screen.active');
             if(currentActive && currentActive.id !== 'screen-settings' && currentActive.id !== 'screen-saveload') previousScreenId = currentActive.id;
+            
             if (inMatchMode) {
-                isMatchRunning = false; if(loopId) { cancelAnimationFrame(loopId); loopId = null; }
-                if(aiTimeoutId) clearTimeout(aiTimeoutId);
-                document.getElementById('match-ui').style.display = 'none'; document.getElementById('global-timer-container').style.display = 'none'; document.getElementById('turn-indicator').style.display = 'none'; document.getElementById('match-settings-btn').classList.remove('active'); canvas.style.display = 'none';
+                if (!isOnline) {
+                    isMatchRunning = false; 
+                    if(loopId) { cancelAnimationFrame(loopId); loopId = null; }
+                    if(aiTimeoutId) clearTimeout(aiTimeoutId);
+                }
+                document.getElementById('match-settings-btn').classList.remove('active');
             }
+            
             document.getElementById('btn-save-game').style.display = (isPVP || !pData.team) ? 'none' : 'block';
-            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active')); document.getElementById('screen-settings').classList.add('active'); document.getElementById('topBar').classList.remove('active');
+            document.querySelectorAll('.screen').forEach(s => {
+                if(s.id !== 'screen-settings' && s.id !== 'screen-saveload') s.classList.remove('active');
+            });
+            document.getElementById('screen-settings').classList.add('active'); 
+            document.getElementById('topBar').classList.remove('active');
         }
 
         function closeSettings() {
             document.getElementById('screen-settings').classList.remove('active');
             if (inMatchMode && state !== 'gameover') {
-                document.getElementById('match-ui').style.display = 'flex'; document.getElementById('global-timer-container').style.display = 'flex'; document.getElementById('turn-indicator').style.display = 'block'; 
-                if(isPVP && !isOnline) { document.getElementById('emojis').style.display = 'none'; }
-                document.getElementById('match-settings-btn').classList.add('active'); canvas.style.display = 'block'; isMatchRunning = true; lastTs = performance.now();
-                if(!loopId) loopId = requestAnimationFrame(loop);
-                if(cTurn === 'pink' && !isPVP) triggerAI();
+                document.getElementById('match-settings-btn').classList.add('active');
+                if (!isOnline) {
+                    isMatchRunning = true; lastTs = performance.now();
+                    if(!loopId) loopId = requestAnimationFrame(loop);
+                    if(cTurn === 'pink' && !isPVP) triggerAI();
+                }
             } else {
                 inMatchMode = false; document.getElementById('match-settings-btn').classList.remove('active'); canvas.style.display = 'none';
                 let backId = (state === 'gameover') ? 'screen-hub' : (previousScreenId || 'screen-hub');
@@ -1126,14 +1141,25 @@
         function loop(ts) {
             if(!isMatchRunning || state==='gameover') return; let dt = (ts-lastTs)/1000; lastTs = ts; if(cTurn==='blue') mStats.uTime+=dt; else mStats.aTime+=dt;
             if(state!=='goal') { globalTimeLeft -= dt; if(globalTimeLeft<=0) { globalTimeLeft=0; finishMatch(); } let m = Math.floor(globalTimeLeft/60), s = Math.floor(globalTimeLeft%60); document.getElementById('global-timer').innerText = `${m}:${s<10?'0':''}${s}`; if(globalTimeLeft<=10) document.getElementById('global-timer').style.color='#f00'; }
-            if(turnTimerAct && (state==='idle' || state==='aiming')) { turnTimeLeft-=dt; document.getElementById('timer-bar').style.width=`${(turnTimeLeft/10)*100}%`; if(turnTimeLeft<=3) document.getElementById('timer-bar').style.background='#f00'; if(turnTimeLeft<=0) { turnTimerAct=false; selDisk=null; playSound('error'); showMsg("TIME OUT!","#f00"); screenShake=5; setTimeout(()=>{ state='idle'; switchTurn(); }, 400); if(state==='aiming') state='moving'; } }
+            if(turnTimerAct && (state==='idle' || state==='aiming')) { 
+                turnTimeLeft-=dt; document.getElementById('timer-bar').style.width=`${(turnTimeLeft/10)*100}%`; if(turnTimeLeft<=3) document.getElementById('timer-bar').style.background='#f00'; 
+                if(turnTimeLeft<=0) { 
+                    turnTimerAct=false; selDisk=null; playSound('error'); showMsg("TIME OUT!","#f00"); screenShake=5; 
+                    setTimeout(()=>{ if(!isOnline || isHost) { state='idle'; switchTurn(); } }, 400); 
+                    if(state==='aiming') state='moving'; 
+                } 
+            }
             ctx.save(); if(screenShake>0){ ctx.translate((Math.random()-0.5)*screenShake, (Math.random()-0.5)*screenShake); screenShake*=0.9; if(screenShake<0.5) screenShake=0; }
             drawPitch(); let anyM = false;
             for(let i=0; i<entities.length; i++){ if(state!=='goal' && entities[i].m!==Infinity){ entities[i].update(); handleWalls(entities[i]); } if(Math.abs(entities[i].vx)>0.08 || Math.abs(entities[i].vy)>0.08) anyM=true; for(let j=i+1; j<entities.length; j++) resolveCollisions(entities[i], entities[j]); entities[i].draw(); }
             for(let i=particles.length-1; i>=0; i--) { particles[i].update(); particles[i].draw(); if(particles[i].life<=0) particles.splice(i,1); }
             if (state==='aiming' && selDisk) { let dx=dragS.x-dragC.x, dy=dragS.y-dragC.y; let f=Math.min(Math.hypot(dx,dy),150); let a=Math.atan2(dy,dx); let isSup = activeSuper[cTurn]; ctx.beginPath(); ctx.arc(selDisk.x, selDisk.y, selDisk.r + (f*0.2), 0, Math.PI*2); ctx.strokeStyle = isSup ? 'rgba(255,51,51,0.6)' : 'rgba(51,255,51,0.5)'; ctx.lineWidth = 2; ctx.stroke(); ctx.beginPath(); ctx.moveTo(selDisk.x,selDisk.y); ctx.lineTo(selDisk.x+Math.cos(a)*f*1.6, selDisk.y+Math.sin(a)*f*1.6); ctx.setLineDash([15,10]); ctx.lineWidth=6; ctx.strokeStyle = isSup ? '#ff3333' : selDisk.c; ctx.shadowBlur=25; ctx.shadowColor = isSup ? '#ff3333' : selDisk.c; ctx.stroke(); ctx.setLineDash([]); ctx.shadowBlur=0; }
             ctx.restore();
-            if (state==='moving' && !anyM) { state='idle'; switchTurn(); } if (isMatchRunning) { loopId = requestAnimationFrame(loop); }
+            
+            if (state==='moving' && !anyM) { 
+                if(!isOnline || isHost) { state='idle'; switchTurn(); } 
+            } 
+            if (isMatchRunning) { loopId = requestAnimationFrame(loop); }
         }
     </script>
 </body>
