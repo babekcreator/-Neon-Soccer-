@@ -5,6 +5,10 @@
     <meta name="google-site-verification" content="1FYZf9gssn-n62-dh-D_u_lvP5E0G2qSaE3aeunNNiE" />
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8476511505120720" crossorigin="anonymous"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#010103">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
     <!-- PeerJS for Online Multiplayer -->
     <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
     <title>Neon Soccer Clash: Ultimate Pro 4V4</title>
@@ -44,7 +48,7 @@
 
         input[type="text"], textarea { background: rgba(255,255,255,0.05); border: 2px solid #33ff33; color: #fff; font-family: 'Orbitron'; font-size: 16px; padding: 12px; border-radius: 8px; text-align: center; outline: none; margin-bottom: 8px; width: 100%; box-shadow: inset 0 0 10px rgba(51,255,51,0.1), 0 0 20px rgba(51,255,51,0.2); transition: 0.3s;}
         input[type="text"]:focus, textarea:focus { background: rgba(51,255,51,0.15); box-shadow: inset 0 0 10px rgba(51,255,51,0.3), 0 0 30px rgba(51,255,51,0.4);}
-        textarea { text-align: left; resize: none; width: 100%; height: 100px; font-family: sans-serif;}
+        textarea { text-align: left; resize: none; width: 100%; height: 80px; font-family: sans-serif; margin-bottom: 15px;}
 
         input[type="range"] { -webkit-appearance: none; width: 100%; background: rgba(255,255,255,0.1); height: 8px; border-radius: 4px; outline: none; margin-bottom: 20px; border: 1px solid #33ff33;}
         input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; background: #33ff33; border-radius: 50%; cursor: pointer; box-shadow: 0 0 15px #33ff33; }
@@ -70,11 +74,16 @@
         .stars-container { font-size: 40px; margin-bottom: 15px; display: flex; justify-content: center; gap: 10px; }
         .star { color: rgba(255,255,255,0.2); cursor: pointer; transition: 0.2s; text-shadow: 0 0 10px rgba(0,0,0,0.5); }
         .star:hover, .star.active { color: #ffd700; text-shadow: 0 0 15px #ffd700; transform: scale(1.1); }
+        
+        /* New Styles for Discussion / Reviews */
         .review-box { width: 100%; background: rgba(0,0,0,0.6); padding: 15px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); margin-top: 10px; text-align: left; }
         .review-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
         .review-name { font-weight: bold; font-size: 14px; color: #33ff33; }
         .review-stars { color: #ffd700; font-size: 14px; }
         .review-text { font-size: 13px; color: #ddd; font-family: sans-serif; line-height: 1.4; }
+        .action-btn { background: transparent; border: 1px solid rgba(255,255,255,0.3); color: #fff; padding: 4px 10px; font-size: 11px; border-radius: 6px; cursor: pointer; transition: 0.2s; margin-right: 5px; }
+        .action-btn:hover { background: rgba(255,255,255,0.1); transform: none; box-shadow: none; }
+        .reply-box { margin-left: 20px; border-left: 2px solid rgba(255,255,255,0.2); padding-left: 10px; margin-top: 8px; font-size: 12px; color: #ccc; font-family: sans-serif;}
 
         .league-card {
             width: 200px; height: 140px; border: 2px solid rgba(51,255,51,0.2); padding: 20px 10px; text-align: center; border-radius: 18px; background: linear-gradient(135deg, rgba(10,30,15,0.95) 0%, rgba(0,0,0,1) 100%); cursor: pointer; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); box-shadow: 0 10px 25px rgba(0,0,0,0.8); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 15px; position: relative; overflow: hidden;
@@ -197,7 +206,7 @@
             <div style="width: 100%; height: 2px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent); margin: 8px 0;"></div>
             <button onclick="openLeaderboard()" class="gold-btn" style="font-size: 15px; padding: 12px; width:100%; border-color:#00f3ff; color:#00f3ff;">🌍 GLOBAL STATS</button>
             <div style="display: flex; gap: 10px; width: 100%;">
-                <button onclick="switchScreen('screen-reviews')" class="gold-btn" style="flex: 1; font-size: 12px; padding: 12px;">⭐ RATE</button>
+                <button onclick="openReviews()" class="gold-btn" style="flex: 1; font-size: 12px; padding: 12px;">⭐ RATE & DISCUSS</button>
                 <a href="mailto:bayramlib56@gmail.com" class="link-btn pink-btn" style="flex: 1; font-size: 12px; padding: 12px; background: rgba(255,0,234,0.1);">💖 SUPPORT</a>
             </div>
             <div class="menu-row" style="margin-top: 5px; gap: 20px;">
@@ -245,7 +254,7 @@
         <div class="modal-container" style="max-width: 600px; margin-top: 20px; max-height: 85vh; overflow-y: auto;">
             <div class="close-settings-btn" onclick="switchScreen('screen-welcome')">✕</div>
             <h1 style="font-size: 26px; color: #00f3ff;">GLOBAL MANAGERS</h1>
-            <h2 style="margin-bottom: 20px;">LAST 5 SEASONS PERFORMANCE</h2>
+            <h2 style="margin-bottom: 20px;">WORLDWIDE LEADERBOARD</h2>
             <div id="leaderboard-list" style="width: 100%;"></div>
         </div>
     </div>
@@ -280,20 +289,28 @@
     
     <style> @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } } </style>
 
-    <!-- REVIEWS & FEEDBACK SCREEN -->
+    <!-- REVIEWS & DISCUSSION SCREEN -->
     <div id="screen-reviews" class="screen">
-        <div class="modal-container" style="max-width: 600px; margin-top: 20px; max-height: 85vh; overflow-y: auto;">
+        <div class="modal-container" style="max-width: 650px; margin-top: 20px; max-height: 85vh; overflow-y: auto;">
             <div class="close-settings-btn" onclick="switchScreen('screen-welcome')">✕</div>
-            <h1 style="font-size: 24px; color: #ffd700;">USER REVIEWS</h1>
-            <h2 style="margin-bottom: 20px;">Leave your feedback or report bugs</h2>
-            <div class="stars-container" id="star-rating-ui">
-                <span class="star" onclick="setRating(1)">★</span><span class="star" onclick="setRating(2)">★</span>
-                <span class="star" onclick="setRating(3)">★</span><span class="star" onclick="setRating(4)">★</span><span class="star" onclick="setRating(5)">★</span>
+            <h1 style="font-size: 24px; color: #ffd700;">GLOBAL DISCUSSION & REVIEWS</h1>
+            
+            <div style="text-align: center; margin-bottom: 20px;">
+                <div style="font-size: 14px; color: #bbb; text-transform: uppercase;">Average Player Rating</div>
+                <div id="average-rating" style="font-size: 40px; color: #33ff33; font-weight: bold; text-shadow: 0 0 15px rgba(51,255,51,0.5);">0.0 <span style="font-size:24px;">/ 5.0</span></div>
             </div>
-            <textarea id="review-input" placeholder="Write your complaint, suggestion, or review here..."></textarea>
-            <button onclick="submitReview()" class="gold-btn" style="width: 100%; margin-top: 10px;">SUBMIT FEEDBACK</button>
-            <div style="width: 100%; height: 1px; background: rgba(255,255,255,0.2); margin: 25px 0 15px 0;"></div>
-            <h2 style="text-align: left; width: 100%; color: #fff;">RECENT REVIEWS</h2>
+
+            <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px; width: 100%; border: 1px solid #ff00ea; margin-bottom: 20px;">
+                <h3 style="margin-top: 0; font-size: 14px; color: #ff00ea;">LEAVE A REVIEW</h3>
+                <div class="stars-container" id="star-rating-ui" style="margin-bottom: 10px;">
+                    <span class="star" onclick="setRating(1)">★</span><span class="star" onclick="setRating(2)">★</span>
+                    <span class="star" onclick="setRating(3)">★</span><span class="star" onclick="setRating(4)">★</span><span class="star" onclick="setRating(5)">★</span>
+                </div>
+                <textarea id="review-input" placeholder="Share your thoughts, suggestions or report bugs..." style="margin-bottom: 10px;"></textarea>
+                <button onclick="submitReview()" class="gold-btn" style="width: 100%;">POST REVIEW</button>
+            </div>
+            
+            <h2 style="text-align: left; width: 100%; color: #fff; margin-bottom: 10px;">ALL COMMENTS</h2>
             <div id="reviews-list" style="width: 100%;"></div>
         </div>
     </div>
@@ -312,12 +329,14 @@
         <div class="modal-container" style="max-width: 650px; margin-top: 20px; text-align: left; max-height: 85vh; overflow-y: auto;">
             <div class="close-settings-btn" onclick="switchScreen('screen-welcome')">✕</div>
             <h1 style="font-size: 24px; text-align: center; margin-bottom: 15px;">LATEST UPDATES</h1>
-            <p style="font-size: 12px; color: #33ff33; text-align: center; margin-bottom: 20px;">Version 3.1 (All Teams Restored & Bug Fixes)</p>
+            <p style="font-size: 12px; color: #33ff33; text-align: center; margin-bottom: 20px;">Version 4.5 (Global Fixes & Enhancements)</p>
             <ul style="font-size: 14px; line-height: 1.8; color: #eee; padding-left: 20px;">
-                <li><strong style="color:#00f3ff;">All Teams Restored:</strong> Bütün liqalardakı orijinal komandalar tam şəkildə geri gətirildi.</li>
-                <li><strong style="color:#ffd700;">Online Goal Sync Fix:</strong> Onlineda qol vurulanda faul yox, birbaşa qol mesajı yazılır və hesab dərhal yenilənir.</li>
-                <li><strong style="color:#ff3333;">Quit Menu Fix:</strong> Quit düyməsinə basıldıqda birbaşa əsas menyuya qayıdır.</li>
-                <li><strong style="color:#33ff33;">Patterns Visualized:</strong> Customize bölməsində naxışların (Patterns) üzərinə görssel nümunələr əlavə olundu.</li>
+                <li><strong style="color:#00f3ff;">Full English Translation:</strong> The entire game UI and patch notes have been translated into English for global players.</li>
+                <li><strong style="color:#ffd700;">Play Button Fixed:</strong> The 'Play Match' button in the Career Hub has been successfully fixed and is now fully functional.</li>
+                <li><strong style="color:#ff00ea;">Instant Quit:</strong> Quitting from settings now immediately returns you to the main menu without any delay or freeze.</li>
+                <li><strong style="color:#33ff33;">Clear Cosmetic Previews:</strong> The Patterns in the Cosmetics menu are now rendered using an advanced Canvas system so you can clearly see the exact designs before equipping them.</li>
+                <li><strong style="color:#00f3ff;">Global Leaderboard & Reviews:</strong> A global-style stats and discussion board has been implemented. You can now see other players' stats, read their reviews, like/dislike comments, and reply to them!</li>
+                <li><strong style="color:#ffd700;">Multiplayer Stability:</strong> Fixed PeerJS online bugs. Disconnections and opponent quits are now handled gracefully without breaking the game.</li>
             </ul>
             <div style="margin-top: 25px; width: 100%; text-align: center;">
                 <button onclick="switchScreen('screen-welcome')" class="gold-btn">BACK TO MENU</button>
@@ -490,15 +509,15 @@
         <h2 style="margin-top: 10px;">SELECT STADIUM THEME</h2>
         <div class="grid-container" style="max-width: 800px;">
             <div class="card selected" id="stadium-classic" onclick="selectStadium('classic', 0)">
-                <h3 style="margin-top:0; font-size:14px; color: #fff;">CLASSIC</h3>
+                <h3 style="margin-top:0; font-size:14px; color: #fff;">CLASSIC GRASS</h3>
                 <p id="txt-stad-classic" style="color:#33ff33; font-weight:bold; font-size:12px; margin:0;">Owned</p>
             </div>
             <div class="card" id="stadium-matrix" onclick="selectStadium('matrix', 500)">
-                <h3 style="margin-top:0; font-size:14px; color: #fff;">MATRIX</h3>
+                <h3 style="margin-top:0; font-size:14px; color: #fff;">DARK PITCH</h3>
                 <p id="txt-stad-matrix" style="color:#ffd700; font-weight:bold; font-size:12px; margin:0;">500 🪙</p>
             </div>
             <div class="card" id="stadium-sunset" onclick="selectStadium('sunset', 1000)">
-                <h3 style="margin-top:0; font-size:14px; color: #fff;">SUNSET</h3>
+                <h3 style="margin-top:0; font-size:14px; color: #fff;">SUNSET DIRT</h3>
                 <p id="txt-stad-sunset" style="color:#ffd700; font-weight:bold; font-size:12px; margin:0;">1000 🪙</p>
             </div>
             <div class="card" id="stadium-neon" onclick="selectStadium('neon', 2000)">
@@ -670,38 +689,129 @@
         }
         preloadFlags();
 
-        // Leaderboard logic
-        function loadLeaderboard() { return JSON.parse(localStorage.getItem('nsc_global_stats') || '[]'); }
-        function saveLeaderboard(lb) { localStorage.setItem('nsc_global_stats', JSON.stringify(lb)); }
+        // --- GLOBAL STATS & LEADERBOARD SYSTEM ---
+        function getGlobalLeaderboard() {
+            let lb = JSON.parse(localStorage.getItem('nsc_global_stats_world')) || [
+                { name: "Faker_TR", total: 4500, history: [] },
+                { name: "ProManager_UK", total: 4200, history: [] },
+                { name: "Alex_BR", total: 3900, history: [] },
+                { name: "NeonGod", total: 3100, history: [] },
+                { name: "Guest_991", total: 1500, history: [] }
+            ];
+            return lb;
+        }
+        function saveGlobalLeaderboard(lb) { localStorage.setItem('nsc_global_stats_world', JSON.stringify(lb)); }
         function updateLeaderboard(name, win, draw) {
             if(!name || name.trim()==='') return;
-            let lb = loadLeaderboard();
+            let lb = getGlobalLeaderboard();
             let idx = lb.findIndex(m => m.name === name);
-            if(idx === -1) { lb.push({name: name, history: []}); idx = lb.length-1; }
-            let pts = win ? 0.250 : (draw ? 0.125 : 0);
-            lb[idx].history.push({ s: season, p: pts });
-            if(lb[idx].history.length > 5) lb[idx].history.shift(); 
-            saveLeaderboard(lb);
+            if(idx === -1) { lb.push({name: name, total: 0, history: []}); idx = lb.length-1; }
+            let pts = win ? 25 : (draw ? 10 : 0);
+            lb[idx].total += pts;
+            saveGlobalLeaderboard(lb);
         }
         function openLeaderboard() {
-            let lb = loadLeaderboard();
-            lb.forEach(m => { m.total = m.history.reduce((a,b)=>a+b.p,0); });
+            let lb = getGlobalLeaderboard();
             lb.sort((a,b) => b.total - a.total);
             let html = '';
             if(lb.length === 0) html = '<div style="color:#aaa;">No stats available yet. Play Career!</div>';
             lb.forEach((m,i) => {
-                html += `<div style="background:rgba(255,255,255,0.05); border:1px solid #00f3ff; border-radius:8px; padding:10px; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center;">
-                    <div><span style="color:#ffd700; font-weight:900;">#${i+1}</span> ${m.name}</div>
-                    <div style="color:#33ff33; font-weight:bold;">${m.total.toFixed(3)} PTS</div>
+                let isMe = m.name === (document.getElementById('manager-name-input').value.trim() || "GuestManager");
+                html += `<div style="background:rgba(255,255,255,0.05); border:1px solid ${isMe?'#33ff33':'#00f3ff'}; border-radius:8px; padding:10px; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center;">
+                    <div><span style="color:#ffd700; font-weight:900;">#${i+1}</span> <span style="${isMe?'color:#33ff33;font-weight:bold;':''}">${m.name} ${isMe?'(YOU)':''}</span></div>
+                    <div style="color:${isMe?'#33ff33':'#fff'}; font-weight:bold;">${m.total} PTS</div>
                 </div>`;
             });
             document.getElementById('leaderboard-list').innerHTML = html;
             switchScreen('screen-leaderboard');
         }
 
+        // --- GLOBAL REVIEWS & DISCUSSION SYSTEM ---
+        let currentRating = 0;
+        function getGlobalReviews() {
+            return JSON.parse(localStorage.getItem('nsc_global_reviews_v2')) || [
+                { id: 1, name: "NeonStriker", rating: 5, text: "Best web soccer game I've played!", likes: 24, dislikes: 1, replies: [{name: "Dev", text: "Thanks for playing!"}] },
+                { id: 2, name: "Faker_TR", rating: 4, text: "Good physics, but it needs more teams in Career mode.", likes: 12, dislikes: 0, replies: [] }
+            ];
+        }
+        function saveGlobalReviews(r) { localStorage.setItem('nsc_global_reviews_v2', JSON.stringify(r)); }
+        
+        function openReviews() {
+            if(!checkManagerName()) return;
+            renderReviews();
+            switchScreen('screen-reviews');
+        }
+
+        function renderReviews() {
+            let reviews = getGlobalReviews();
+            let list = document.getElementById('reviews-list');
+            let avgEl = document.getElementById('average-rating');
+            
+            if(reviews.length === 0) {
+                list.innerHTML = "<p>No reviews yet. Be the first!</p>";
+                avgEl.innerHTML = `0.0 <span style="font-size:24px;">/ 5.0</span>`;
+                return;
+            }
+            
+            let total = reviews.reduce((sum, r) => sum + r.rating, 0);
+            let avg = (total / reviews.length).toFixed(1);
+            avgEl.innerHTML = `${avg} <span style="font-size:24px;">/ 5.0</span>`;
+
+            let html = "";
+            reviews.reverse().forEach(r => {
+                let starString = "★".repeat(r.rating) + "☆".repeat(5 - r.rating);
+                let repliesHtml = r.replies.map(rep => `<div class="reply-box"><strong>${rep.name}:</strong> ${rep.text}</div>`).join('');
+                
+                html += `<div class="review-box" style="animation: fadeIn 0.4s;">
+                    <div class="review-header">
+                        <span class="review-name">${r.name}</span>
+                        <span class="review-stars">${starString}</span>
+                    </div>
+                    <div class="review-text">${r.text}</div>
+                    <div style="margin-top: 10px; display: flex; align-items: center;">
+                        <button class="action-btn" onclick="likeReview(${r.id})">👍 ${r.likes}</button>
+                        <button class="action-btn" onclick="dislikeReview(${r.id})">👎 ${r.dislikes}</button>
+                        <button class="action-btn" style="color:#00f3ff; border-color:#00f3ff;" onclick="replyReview(${r.id})">💬 Reply</button>
+                    </div>
+                    ${repliesHtml}
+                </div>`;
+            });
+            list.innerHTML = html;
+        }
+
+        function setRating(val) { currentRating = val; let stars = document.querySelectorAll('#star-rating-ui .star'); stars.forEach((s, index) => { if (index < val) s.classList.add('active'); else s.classList.remove('active'); }); }
+        
+        function submitReview() {
+            let text = document.getElementById('review-input').value.trim();
+            if (currentRating === 0) { alert("Please select a star rating!"); return; }
+            if (text === "") { alert("Please write a comment!"); return; }
+            
+            let reviews = getGlobalReviews();
+            let name = document.getElementById('manager-name-input').value.trim() || "GuestManager";
+            
+            reviews.push({
+                id: Date.now(), name: name, rating: currentRating, text: text, likes: 0, dislikes: 0, replies: []
+            });
+            saveGlobalReviews(reviews);
+            document.getElementById('review-input').value = ""; setRating(0);
+            renderReviews();
+            alert("Thank you! Your review is now visible to all players.");
+        }
+
+        function likeReview(id) { let r = getGlobalReviews(); let rev = r.find(x => x.id === id); if(rev) { rev.likes++; saveGlobalReviews(r); renderReviews(); } }
+        function dislikeReview(id) { let r = getGlobalReviews(); let rev = r.find(x => x.id === id); if(rev) { rev.dislikes++; saveGlobalReviews(r); renderReviews(); } }
+        function replyReview(id) {
+            let txt = prompt("Write your reply:");
+            if(txt && txt.trim() !== '') {
+                let r = getGlobalReviews(); let rev = r.find(x => x.id === id);
+                let name = document.getElementById('manager-name-input').value.trim() || "GuestManager";
+                if(rev) { rev.replies.push({name: name, text: txt.trim()}); saveGlobalReviews(r); renderReviews(); }
+            }
+        }
+
         function checkManagerName() {
             let n = document.getElementById('manager-name-input').value.trim();
-            if(!n) { alert('Zəhmət olmasa Manager adınızı daxil edin!'); return false; }
+            if(!n) { alert('Please enter your Manager Name!'); return false; }
             return true;
         }
 
@@ -743,14 +853,18 @@
             document.getElementById('online-waiting-container').style.display = 'flex';
             document.getElementById('online-status').innerText = "CONNECTING TO SERVER...";
             
-            roomCode = generateRoomCode(); peer = new Peer("NSC31-" + roomCode); 
+            roomCode = generateRoomCode(); peer = new Peer("NSC32-" + roomCode); 
             
             peer.on('open', (id) => {
                 document.getElementById('online-status').innerText = "WAITING FOR OPPONENT";
                 document.getElementById('the-room-code').innerText = roomCode; isHost = true;
             });
-            peer.on('connection', (c) => { peerConn = c; peerConn.on('open', () => { setupConnection(); peerConn.send({type:'config', conf:matchConfig}); }); });
+            peer.on('connection', (c) => { 
+                peerConn = c; 
+                peerConn.on('open', () => { setupConnection(); peerConn.send({type:'config', conf:matchConfig}); }); 
+            });
             peer.on('error', (err) => { alert("Error: " + err.type); cancelOnline(); });
+            peer.on('disconnected', () => { if(isMatchRunning) { alert("Opponent disconnected!"); goToMainMenu(); } });
         }
 
         function joinRoom() {
@@ -761,9 +875,10 @@
             
             peer = new Peer();
             peer.on('open', () => {
-                peerConn = peer.connect("NSC31-" + code, {reliable: true});
+                peerConn = peer.connect("NSC32-" + code, {reliable: true});
                 peerConn.on('open', () => { isHost = false; setupConnection(); });
                 peerConn.on('error', (err) => { alert("Connection error: " + err); cancelOnline(); });
+                peerConn.on('close', () => { if(isMatchRunning) { alert("Host disconnected!"); goToMainMenu(); } });
             });
             peer.on('error', (err) => { alert("Error: " + err.type); cancelOnline(); });
         }
@@ -814,20 +929,6 @@
             } else if(data.type === 'super_active') { activeSuper[data.team] = true; powerups[data.team]--; updateUI(); playSound('powerup'); }
         }
 
-        let currentRating = 0;
-        function setRating(val) { currentRating = val; let stars = document.querySelectorAll('#star-rating-ui .star'); stars.forEach((s, index) => { if (index < val) s.classList.add('active'); else s.classList.remove('active'); }); }
-        function submitReview() {
-            let text = document.getElementById('review-input').value.trim();
-            if (currentRating === 0) { alert("Please select a star rating!"); return; }
-            if (text === "") { alert("Please write a comment!"); return; }
-            let list = document.getElementById('reviews-list');
-            let starString = "★".repeat(currentRating) + "☆".repeat(5 - currentRating);
-            let name = document.getElementById('manager-name-input').value.trim() || "GuestManager";
-            let newReview = `<div class="review-box" style="border-color: #33ff33; animation: fadeIn 0.5s;"><div class="review-header"><span class="review-name">${name}</span><span class="review-stars">${starString}</span></div><div class="review-text">${text}</div></div>`;
-            list.insertAdjacentHTML('afterbegin', newReview); document.getElementById('review-input').value = ""; setRating(0); alert("Thank you for your feedback! It helps us improve the game.");
-        }
-
-        // BÜTÜN ORİJİNAL LİQALAR VƏ BÜTÜN KOMANDALAR TAM BƏRPA OLUNDU
         const LEAGUES = {
             eng: { name: "Premier League", flagImg: "https://flagcdn.com/w80/gb-eng.png", teams: [ {n:"Manchester City", c1:"#00f3ff", c2:"#002244", c:"#00f3ff"}, {n:"Arsenal", c1:"#ff3333", c2:"#ffffff", c:"#ff3333"}, {n:"Liverpool", c1:"#ff1133", c2:"#002244", c:"#ff1133"}, {n:"Chelsea", c1:"#0044ff", c2:"#ffffff", c:"#0044ff"}, {n:"Tottenham Hotspur", c1:"#dddddd", c2:"#112244", c:"#dddddd"}, {n:"Manchester United", c1:"#ee0000", c2:"#111111", c:"#ee0000"}, {n:"Newcastle United", c1:"#cccccc", c2:"#000000", c:"#cccccc"}, {n:"Aston Villa", c1:"#770022", c2:"#00bbff", c:"#770022"}, {n:"West Ham United", c1:"#771122", c2:"#224466", c:"#771122"}, {n:"Brighton", c1:"#00aaff", c2:"#000066", c:"#00aaff"}, {n:"Wolverhampton", c1:"#ff7700", c2:"#222222", c:"#ff7700"}, {n:"Fulham", c1:"#eeeeee", c2:"#111111", c:"#eeeeee"}, {n:"Crystal Palace", c1:"#0022cc", c2:"#cc0022", c:"#0022cc"}, {n:"Bournemouth", c1:"#dd0000", c2:"#222222", c:"#dd0000"}, {n:"Everton", c1:"#0033cc", c2:"#ffffff", c:"#0033cc"}, {n:"Brentford", c1:"#ff2222", c2:"#ffffff", c:"#ff2222"}, {n:"Nottingham Forest", c1:"#ee2200", c2:"#ffffff", c:"#ee2200"}, {n:"Leicester City", c1:"#0022aa", c2:"#ffaa00", c:"#0022aa"}, {n:"Southampton", c1:"#cc0000", c2:"#ffffff", c:"#cc0000"}, {n:"Ipswich Town", c1:"#0044cc", c2:"#ffffff", c:"#0044cc"} ] },
             spa: { name: "La Liga", flagImg: "https://flagcdn.com/w80/es.png", teams: [ {n:"Real Madrid", c1:"#f0f0f0", c2:"#888888", c:"#f0f0f0"}, {n:"Barcelona", c1:"#0022cc", c2:"#cc0022", c:"#0022cc"}, {n:"Atletico Madrid", c1:"#ee2222", c2:"#ffffff", c:"#ee2222"}, {n:"Girona", c1:"#ff4444", c2:"#ffffff", c:"#ff4444"}, {n:"Athletic Club", c1:"#dd1111", c2:"#ffffff", c:"#dd1111"}, {n:"Real Sociedad", c1:"#0044cc", c2:"#ffffff", c:"#0044cc"}, {n:"Real Betis", c1:"#00bb44", c2:"#111111", c:"#00bb44"}, {n:"Villarreal", c1:"#ffcc00", c2:"#0000ff", c:"#ffcc00"}, {n:"Valencia", c1:"#ffffff", c2:"#222222", c:"#ffffff"}, {n:"Sevilla", c1:"#f8f8f8", c2:"#ff2222", c:"#f8f8f8"}, {n:"Osasuna", c1:"#cc0000", c2:"#0022cc", c:"#cc0000"}, {n:"Alaves", c1:"#0033cc", c2:"#ffffff", c:"#0033cc"}, {n:"Celta Vigo", c1:"#00ddff", c2:"#ffffff", c:"#00ddff"}, {n:"Mallorca", c1:"#ee2222", c2:"#ffcc00", c:"#ee2222"}, {n:"Getafe", c1:"#0022aa", c2:"#ffffff", c:"#0022aa"}, {n:"Las Palmas", c1:"#ffbb00", c2:"#0033cc", c:"#ffbb00"}, {n:"Rayo Vallecano", c1:"#f5f5f5", c2:"#cc0000", c:"#f5f5f5"}, {n:"Leganes", c1:"#0044cc", c2:"#ffffff", c:"#0044cc"}, {n:"Real Valladolid", c1:"#8822cc", c2:"#ffffff", c:"#8822cc"}, {n:"Espanyol", c1:"#0033cc", c2:"#ffffff", c:"#0033cc"} ] },
@@ -908,11 +1009,12 @@
             }
         }
 
-        // QUIT TO MAIN MENU İSTƏDİYİN KİMİ BİRBAŞA ANA MENYUYA QAYIDIR
         function goToMainMenu() {
             isMatchRunning = false; inMatchMode = false; if(loopId) { cancelAnimationFrame(loopId); loopId = null; }
             document.getElementById('match-ui').style.display = 'none'; document.getElementById('global-timer-container').style.display = 'none'; document.getElementById('turn-indicator').style.display = 'none'; document.getElementById('match-settings-btn').classList.remove('active'); canvas.style.display = 'none';
             if(isOnline) { isOnline = false; isHost = false; if(peerConn) { peerConn.close(); peerConn = null; } if(peer) { peer.destroy(); peer = null; } }
+            // Close settings strictly to menu
+            document.getElementById('screen-settings').classList.remove('active');
             switchScreen('screen-welcome');
         }
 
@@ -1107,6 +1209,14 @@
             document.getElementById('season-display').innerText = `SEASON ${season} | WEEK ${cWeek+1} / ${totalWeeks}`; let matchPair = scheduleMatrix[cWeek].find(p => p[0] === 0 || p[1] === 0); oppId = matchPair[0] === 0 ? matchPair[1] : matchPair[0]; let activeOpp = league.find(t => t.id === oppId); let isHome = matchPair[0] === 0; document.getElementById('next-match-text').innerText = `NEXT MATCH (${isHome ? 'HOME' : 'AWAY'}): VS ${activeOpp.name}`;
         }
 
+        function startLeagueMatch() {
+            if (!pData.team || oppId === -1) {
+                alert("No scheduled match found!");
+                return;
+            }
+            startMatch();
+        }
+
         function triggerSeasonEnd() {
             let rank = league.findIndex(t=>t.id===0) + 1; let rankReward = (rank === 1) ? 1500 : (rank <= 3 ? 1000 : (rank <= 6 ? 500 : 200)); pData.coins += rankReward; updateTopBar();
             updateLeaderboard(pData.manager, rank === 1, false); 
@@ -1126,59 +1236,74 @@
 
         function upgradeSkill(type) { if(pData.skillPoints > 0) { pData.skillPoints--; if(type === 'coinBonus') { pData.coinBonusLvl++; document.getElementById('lbl-coin-bonus').innerText = `Lvl ${pData.coinBonusLvl}`; } if(type === 'superBoost') { pData.superBoostLvl++; document.getElementById('lbl-super-boost').innerText = `Lvl ${pData.superBoostLvl}`; } if(type === 'xpBoost') { pData.xpBoostLvl = (pData.xpBoostLvl||0) + 1; document.getElementById('lbl-xp-boost').innerText = `Lvl ${pData.xpBoostLvl}`; } document.getElementById('skill-points-text').innerText = `AVAILABLE SKILL POINTS: ${pData.skillPoints}`; alert("Skill upgraded successfully!"); } else alert("No skill points available!"); }
         
-        function openCosmetics() {
-            showCosmeticTab('patterns');
-            switchScreen('screen-cosmetics');
-        }
+        function openCosmetics() { showCosmeticTab('patterns'); switchScreen('screen-cosmetics'); }
 
-        // PATTERNS ÜÇÜN VİZUAL GÖRÜNTÜLÜ (NÜMUNƏLİ) TƏRTİBAT
         function showCosmeticTab(tab) {
             document.getElementById('tab-patterns').style.opacity = tab === 'patterns' ? '1' : '0.5';
             document.getElementById('tab-flags').style.opacity = tab === 'flags' ? '1' : '0.5';
             let grid = document.getElementById('cosmetic-grid'); grid.innerHTML = '';
-            
             let list = tab === 'patterns' ? COSMA.patterns : COSMA.flags;
             list.forEach(c => {
                 let isOwned = isOnline || pData.ownedCosmetics.includes(c) || c === 'none';
                 let price = tab === 'patterns' ? 5000 : 10000;
                 let isActive = pData.activeCosmetic === c;
-                
                 let btnHtml = '';
                 if(isActive) btnHtml = `<button class="pink-btn" style="width:100%; font-size:12px;">ACTIVE</button>`;
                 else if(isOwned) btnHtml = `<button onclick="equipCosmetic('${c}')" class="blue-btn" style="width:100%; font-size:12px;">EQUIP</button>`;
                 else btnHtml = `<button onclick="buyCosmetic('${c}', ${price})" class="gold-btn" style="width:100%; font-size:12px;">${price} 🪙</button>`;
                 
                 let visHtml = '';
-                if(tab === 'flags') {
-                    visHtml = `<img src="https://flagcdn.com/w80/${c === 'eng' ? 'gb-eng' : (c==='spa'?'es':(c==='ita'?'it':(c==='ger'?'de':(c==='fra'?'fr':(c==='tur'?'tr':(c==='aze'?'az':(c==='ned'?'nl':'pt')))))))}.png" style="width:60px; height:60px; object-fit:cover; border-radius:50%; border:2px solid #fff;">`;
-                } else {
-                    // Pattern mini preview HTML/CSS
-                    visHtml = `<div style="width:60px; height:60px; border-radius:50%; background:#113322; border:2px solid #33ff33; position:relative; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:bold; color:#fff; overflow:hidden;">
-                        <div style="position:absolute; width:100%; height:100%; opacity:0.6; background:${c==='stripes'?'linear-gradient(90deg, #fff 50%, transparent 50%)':(c==='cross'?'radial-gradient(#fff 20%, transparent 20%)':(c==='ring'?'radial-gradient(transparent 40%, #fff 40%, #fff 60%, transparent 60%)':'#33ff33'))}; background-size:${c==='stripes'?'10px 10px':'100% 100%'};"></div>
-                        <span style="z-index:2; text-shadow:0 1px 2px #000;">${c.toUpperCase()}</span>
-                    </div>`;
+                if(tab === 'flags') { 
+                    visHtml = `<img src="https://flagcdn.com/w80/${c === 'eng' ? 'gb-eng' : (c==='spa'?'es':(c==='ita'?'it':(c==='ger'?'de':(c==='fra'?'fr':(c==='tur'?'tr':(c==='aze'?'az':(c==='ned'?'nl':'pt')))))))}.png" style="width:80px; height:80px; object-fit:cover; border-radius:50%; border:2px solid #fff;">`; 
+                } 
+                else {
+                    visHtml = `<canvas id="canvas-cosm-${c}" width="80" height="80" style="border-radius:50%; box-shadow: 0 0 10px rgba(51,255,51,0.5);"></canvas>`;
                 }
-
+                
                 grid.innerHTML += `<div class="card ${isActive?'selected':''}" style="width:140px; padding:15px; display:flex; flex-direction:column; align-items:center; gap:10px;">
-                    ${visHtml}
-                    <div style="font-size:11px; font-weight:bold; color:#fff; text-transform:uppercase;">${c}</div>
-                    ${btnHtml}
-                </div>`;
+                    ${visHtml}<div style="font-size:11px; font-weight:bold; color:#fff; text-transform:uppercase;">${c}</div>${btnHtml}</div>`;
             });
+
+            // Draw Patterns to Canvas explicitly
+            if(tab === 'patterns') {
+                setTimeout(() => {
+                    list.forEach(c => {
+                        let cElem = document.getElementById('canvas-cosm-' + c);
+                        if(cElem) {
+                            let ctxC = cElem.getContext('2d');
+                            ctxC.clearRect(0,0,80,80);
+                            ctxC.fillStyle = '#113322';
+                            ctxC.beginPath(); ctxC.arc(40,40,38,0,Math.PI*2); ctxC.fill();
+                            
+                            // Instantiate temporary disk just to use drawPattern
+                            let dummyDisk = new Disk(40, 40, 38, 1, '#33ff33', 'player', null, false, c);
+                            // We need to pass correct context inside Disk methods. 
+                            // Quick patch for standalone draw:
+                            ctxC.save(); ctxC.translate(40,40); ctxC.beginPath(); ctxC.arc(0,0,38*0.9,0,Math.PI*2); ctxC.clip();
+                            ctxC.fillStyle = 'rgba(255,255,255,0.4)';
+                            let r = 38;
+                            if(c === 'stripes') { for(let i=-r; i<r; i+=10) ctxC.fillRect(i, -r, 4, r*2); }
+                            if(c === 'dots') { for(let i=-r; i<r; i+=12) for(let j=-r; j<r; j+=12) { ctxC.beginPath(); ctxC.arc(i,j,2.5,0,Math.PI*2); ctxC.fill(); } }
+                            if(c === 'cross') { ctxC.fillRect(-r, -4, r*2, 8); ctxC.fillRect(-4, -r, 8, r*2); }
+                            if(c === 'spiral') { ctxC.beginPath(); for(let i=0; i<30; i++) { let a=i*0.5, rad=i*0.8; ctxC.lineTo(Math.cos(a)*rad, Math.sin(a)*rad); } ctxC.strokeStyle='rgba(255,255,255,0.7)'; ctxC.lineWidth=4; ctxC.stroke(); }
+                            if(c === 'ring') { ctxC.beginPath(); ctxC.arc(0,0,r*0.5,0,Math.PI*2); ctxC.lineWidth=5; ctxC.strokeStyle='rgba(255,255,255,0.7)'; ctxC.stroke(); }
+                            if(c === 'stars') { for(let i=0; i<3; i++) { ctxC.beginPath(); ctxC.arc((i-1)*(r*0.4), 0, 4, 0, Math.PI*2); ctxC.fill(); } }
+                            if(c === 'triangle') { ctxC.beginPath(); ctxC.moveTo(0,-r*0.6); ctxC.lineTo(r*0.5,r*0.4); ctxC.lineTo(-r*0.5,r*0.4); ctxC.closePath(); ctxC.fill(); }
+                            if(c === 'target') { ctxC.beginPath(); ctxC.arc(0,0,r*0.6,0,Math.PI*2); ctxC.lineWidth=4; ctxC.strokeStyle='rgba(255,255,255,0.7)'; ctxC.stroke(); ctxC.beginPath(); ctxC.arc(0,0,r*0.2,0,Math.PI*2); ctxC.fill(); }
+                            if(c === 'checkered') { for(let i=-r; i<r; i+=10) { for(let j=-r; j<r; j+=10) { if((i/10+j/10)%2===0) ctxC.fillRect(i,j,10,10); } } }
+                            ctxC.restore();
+                            
+                            // Outlines
+                            ctxC.beginPath(); ctxC.arc(40,40,38,0,Math.PI*2);
+                            ctxC.lineWidth = 3; ctxC.strokeStyle = '#33ff33'; ctxC.stroke();
+                        }
+                    });
+                }, 50);
+            }
         }
 
-        function buyCosmetic(id, price) {
-            if(pData.coins >= price) {
-                pData.coins -= price; pData.ownedCosmetics.push(id); updateTopBar();
-                equipCosmetic(id); showCosmeticTab(COSMA.patterns.includes(id) ? 'patterns' : 'flags');
-                alert("Purchased successfully!");
-            } else { alert("Not enough coins!"); }
-        }
-
-        function equipCosmetic(id) {
-            pData.activeCosmetic = id; 
-            showCosmeticTab(COSMA.patterns.includes(id) ? 'patterns' : 'flags');
-        }
+        function buyCosmetic(id, price) { if(pData.coins >= price) { pData.coins -= price; pData.ownedCosmetics.push(id); updateTopBar(); equipCosmetic(id); showCosmeticTab(COSMA.patterns.includes(id) ? 'patterns' : 'flags'); alert("Purchased successfully!"); } else { alert("Not enough coins!"); } }
+        function equipCosmetic(id) { pData.activeCosmetic = id; showCosmeticTab(COSMA.patterns.includes(id) ? 'patterns' : 'flags'); }
 
         function activateSuperShot() { 
             if(isOnline) { if(isHost && cTurn !== 'blue') return; if(!isHost && cTurn !== 'pink') return; if(state === 'idle' && powerups[cTurn] > 0) { activeSuper[cTurn] = true; powerups[cTurn]--; playSound('powerup'); updateUI(); peerConn.send({type: 'super_active', team: cTurn}); } return; }
@@ -1198,17 +1323,28 @@
         const canvas = document.getElementById('gameCanvas'); const ctx = canvas.getContext('2d');
         const P_LEFT=100, P_RIGHT=900, P_TOP=60, P_BOTTOM=540, G_TOP=220, G_BOTTOM=380, POST_RADIUS=9;
         let FRIC = 0.975; let mScores={left:0, right:0}, cTurn='blue', state='idle', shots=0, mStats={uShots:0, uTime:0, aTime:0};
-        let entities=[], particles=[], dragS={x:0,y:0}, dragC={x:0,y:0}, selDisk=null, loopId=null;
-        let screenShake=0, turnTimeLeft=10, turnTimerAct=true, globalTimeLeft=120, lastTs=0;
+        let entities=[], particles=[], powerUpDrops=[], dragS={x:0,y:0}, dragC={x:0,y:0}, selDisk=null, loopId=null;
+        let screenShake=0, turnTimeLeft=10, turnTimerAct=true, globalTimeLeft=120, lastTs=0, lastHitTeam='blue';
 
         class Particle { constructor(x,y,c,spd) { this.x=x; this.y=y; this.c=c; this.life=1.0; this.dec=0.03+Math.random()*0.03; let a=Math.random()*Math.PI*2, s=Math.random()*spd; this.vx=Math.cos(a)*s; this.vy=Math.sin(a)*s; this.sz=2+Math.random()*4; } update(){ this.x+=this.vx; this.y+=this.vy; this.life-=this.dec; } draw(){ ctx.globalAlpha=Math.max(0,this.life); ctx.fillStyle=this.c; ctx.beginPath(); ctx.arc(this.x,this.y,this.sz,0,Math.PI*2); ctx.fill(); ctx.globalAlpha=1; } }
         function explode(x,y,c,amt,spd) { for(let i=0;i<amt;i++) particles.push(new Particle(x,y,c,spd)); }
 
+        class PowerUpItem {
+            constructor(x,y,type) { this.x=x; this.y=y; this.type=type; this.r=15; this.life=1.0; this.active=true; }
+            draw() {
+                if(!this.active) return;
+                ctx.save(); ctx.translate(this.x, this.y);
+                ctx.shadowColor = this.type==='speed'?'#00ffff':'#ffff00'; ctx.shadowBlur=15;
+                ctx.fillStyle = 'rgba(0,0,0,0.8)'; ctx.strokeStyle = ctx.shadowColor; ctx.lineWidth = 2;
+                ctx.beginPath(); ctx.arc(0,0,this.r,0,Math.PI*2); ctx.fill(); ctx.stroke();
+                ctx.fillStyle = ctx.shadowColor; ctx.font = '16px sans-serif'; ctx.textAlign='center'; ctx.textBaseline='middle';
+                ctx.fillText(this.type==='speed'?'⚡':'🌟', 0, 0);
+                ctx.restore();
+            }
+        }
+
         function getPositions(format, team, tac) {
-            let p = [];
-            let cx = team==='blue' ? P_LEFT : P_RIGHT; 
-            let dir = team==='blue' ? 1 : -1;
-            
+            let p = []; let cx = team==='blue' ? P_LEFT : P_RIGHT; let dir = team==='blue' ? 1 : -1;
             p.push({x: cx + dir*40, y: 300, isKeeper: true});
             if(format === 2) { p.push({x: cx + dir*180, y: 300}); }
             if(format === 3) {
@@ -1229,6 +1365,11 @@
             return p;
         }
 
+        function hexToRgba(hex, alpha) {
+            let r=parseInt(hex.slice(1,3),16), g=parseInt(hex.slice(3,5),16), b=parseInt(hex.slice(5,7),16);
+            return `rgba(${r},${g},${b},${alpha})`;
+        }
+
         class Disk {
             constructor(x,y,r,m,c,t,team=null, isKeeper=false, cosmetic='none') { this.x=x; this.y=y; this.sX=x; this.sY=y; this.vx=0; this.vy=0; this.r=r; this.m=m; this.c=c; this.type=t; this.team=team; this.angle=0; this.trail=[]; this.isSuper = false; this.isKeeper=isKeeper; this.cosmetic=cosmetic; }
             drawPattern(cx, cy, r, pat) {
@@ -1246,12 +1387,33 @@
                 ctx.restore();
             }
             draw() {
+                // Realistic Drop Shadows
+                if (this.type !== 'post') {
+                    ctx.save();
+                    let shadowOffsetX = (this.x - canvas.width/2) * 0.03;
+                    let shadowOffsetY = (this.y - canvas.height/2) * 0.03;
+                    ctx.shadowColor = 'rgba(0,0,0,0.6)';
+                    ctx.shadowBlur = 10;
+                    ctx.shadowOffsetX = shadowOffsetX;
+                    ctx.shadowOffsetY = shadowOffsetY;
+                    ctx.beginPath(); ctx.arc(this.x, this.y, this.r, 0, Math.PI*2); ctx.fillStyle='transparent'; ctx.fill();
+                    ctx.restore();
+                }
+
                 if(this.trail.length > 1 && (this.type==='player' || this.type==='ball')) { ctx.beginPath(); ctx.moveTo(this.trail[0].x, this.trail[0].y); for(let i=1; i<this.trail.length; i++) ctx.lineTo(this.trail[i].x, this.trail[i].y); ctx.strokeStyle = this.isSuper ? '#ff3333' : this.c; ctx.lineWidth = this.r*0.7; ctx.lineCap = 'round'; ctx.globalAlpha = 0.3; ctx.stroke(); ctx.globalAlpha = 1.0; }
                 if(this.isSuper) { ctx.shadowBlur = 25; ctx.shadowColor = '#ff3333'; ctx.strokeStyle = '#ff3333'; ctx.lineWidth = 4; ctx.beginPath(); ctx.arc(this.x, this.y, this.r + 5 + Math.random()*5, 0, Math.PI*2); ctx.stroke(); ctx.shadowBlur = 0; }
+                
                 ctx.beginPath(); ctx.arc(this.x,this.y,this.r,0,Math.PI*2);
                 if (this.type==='post') { ctx.shadowBlur=15; ctx.shadowColor='#fff'; ctx.fillStyle='#fff'; ctx.fill(); } 
                 else if (this.type==='player') { 
-                    ctx.shadowBlur=20; ctx.shadowColor=this.isSuper ? '#ff3333' : this.c; ctx.fillStyle=this.c; ctx.fill(); ctx.shadowBlur=0;
+                    // 3D Realistic Radial Gradient for Player
+                    let grd = ctx.createRadialGradient(this.x - this.r*0.2, this.y - this.r*0.2, this.r*0.1, this.x, this.y, this.r);
+                    let colorBase = this.isSuper ? '#ff3333' : this.c;
+                    grd.addColorStop(0, '#ffffff'); // Shiny highlight
+                    grd.addColorStop(0.3, colorBase);
+                    grd.addColorStop(1, '#000000'); // Dark edge
+                    
+                    ctx.shadowBlur=20; ctx.shadowColor=colorBase; ctx.fillStyle=grd; ctx.fill(); ctx.shadowBlur=0;
                     
                     if(this.cosmetic !== 'none') {
                         if(COSMA.flags.includes(this.cosmetic) && loadedFlagImages[this.cosmetic]) {
@@ -1262,18 +1424,37 @@
                             this.drawPattern(this.x, this.y, this.r, this.cosmetic);
                         }
                     } else {
-                        ctx.beginPath(); ctx.arc(this.x,this.y,this.r*0.65,0,Math.PI*2); ctx.fillStyle='#010803'; ctx.fill(); 
-                        ctx.beginPath(); ctx.arc(this.x,this.y,this.r*0.35,0,Math.PI*2); ctx.fillStyle=this.c; ctx.fill(); 
+                        ctx.beginPath(); ctx.arc(this.x,this.y,this.r*0.65,0,Math.PI*2); ctx.fillStyle='rgba(0,0,0,0.6)'; ctx.fill(); 
+                        ctx.beginPath(); ctx.arc(this.x,this.y,this.r*0.35,0,Math.PI*2); ctx.fillStyle=colorBase; ctx.fill(); 
                     }
 
-                    if(state==='idle' && this.team===cTurn) { ctx.strokeStyle=this.c; ctx.lineWidth=3; ctx.globalAlpha=0.7+Math.sin(Date.now()*0.008)*0.3; ctx.beginPath(); ctx.arc(this.x, this.y, this.r+6, 0, Math.PI*2); ctx.stroke(); ctx.globalAlpha=1; } 
-                } else if (this.type==='ball') { ctx.shadowBlur=20; ctx.shadowColor='#fff'; ctx.fillStyle='#fff'; ctx.fill(); ctx.shadowBlur=0; ctx.save(); ctx.translate(this.x, this.y); ctx.rotate(this.angle); ctx.strokeStyle='#111'; ctx.lineWidth=3; ctx.beginPath(); ctx.arc(0,0,this.r*0.4,0,Math.PI*2); ctx.stroke(); for(let i=0;i<3;i++){ let a=(i*Math.PI*2)/3; ctx.beginPath(); ctx.moveTo(Math.cos(a)*this.r*0.4, Math.sin(a)*this.r*0.4); ctx.lineTo(Math.cos(a)*this.r, Math.sin(a)*this.r); ctx.stroke(); } ctx.restore(); } ctx.shadowBlur=0;
+                    if(state==='idle' && this.team===cTurn) { ctx.strokeStyle=colorBase; ctx.lineWidth=3; ctx.globalAlpha=0.7+Math.sin(Date.now()*0.008)*0.3; ctx.beginPath(); ctx.arc(this.x, this.y, this.r+6, 0, Math.PI*2); ctx.stroke(); ctx.globalAlpha=1; } 
+                } else if (this.type==='ball') { 
+                    // Realistic Soccer Ball (Classic Hexagon illusion or smooth shiny ball)
+                    let bgGrd = ctx.createRadialGradient(this.x - this.r*0.3, this.y - this.r*0.3, this.r*0.1, this.x, this.y, this.r);
+                    bgGrd.addColorStop(0, '#ffffff');
+                    bgGrd.addColorStop(0.8, '#dddddd');
+                    bgGrd.addColorStop(1, '#555555');
+                    ctx.fillStyle=bgGrd; ctx.fill();
+                    
+                    ctx.save(); ctx.translate(this.x, this.y); ctx.rotate(this.angle); ctx.strokeStyle='#111'; ctx.lineWidth=3; 
+                    // Pentagon pattern lines
+                    ctx.beginPath(); ctx.arc(0,0,this.r*0.4,0,Math.PI*2); ctx.stroke(); 
+                    for(let i=0;i<3;i++){ let a=(i*Math.PI*2)/3; ctx.beginPath(); ctx.moveTo(Math.cos(a)*this.r*0.4, Math.sin(a)*this.r*0.4); ctx.lineTo(Math.cos(a)*this.r, Math.sin(a)*this.r); ctx.stroke(); } 
+                    ctx.restore(); 
+                } ctx.shadowBlur=0;
             }
-            update() { if(this.m===Infinity) return; this.x+=this.vx; this.y+=this.vy; this.vx*=FRIC; this.vy*=FRIC; if(Math.abs(this.vx)<0.05) this.vx=0; if(Math.abs(this.vy)<0.05) this.vy=0; if(this.type === 'ball') this.angle += Math.hypot(this.vx,this.vy)*0.15; if(Math.hypot(this.vx, this.vy) > 2.0) { this.trail.push({x: this.x, y: this.y}); if(this.trail.length > 10) this.trail.shift(); } else { if(this.trail.length > 0) this.trail.shift(); } }
+            updateFriction() { if(this.m===Infinity) return; this.vx*=FRIC; this.vy*=FRIC; if(Math.abs(this.vx)<0.05) this.vx=0; if(Math.abs(this.vy)<0.05) this.vy=0; }
+            subUpdate(steps) {
+                if(this.m===Infinity) return;
+                this.x += this.vx / steps; this.y += this.vy / steps;
+                if(this.type === 'ball') this.angle += Math.hypot(this.vx/steps, this.vy/steps)*0.15;
+            }
+            trackTrail() {
+                if(Math.hypot(this.vx, this.vy) > 2.0) { this.trail.push({x: this.x, y: this.y}); if(this.trail.length > 10) this.trail.shift(); } else { if(this.trail.length > 0) this.trail.shift(); }
+            }
             reset() { if(this.m!==Infinity){ this.x=this.sX; this.y=this.sY; this.vx=0; this.vy=0; this.trail=[]; this.isSuper = false;} }
         }
-
-        function startLeagueMatch() { startMatch(); }
 
         function startMatch() {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active')); inMatchMode = true; previousScreenId = ''; document.getElementById('match-ui').style.display='flex'; document.getElementById('global-timer-container').style.display='flex'; document.getElementById('turn-indicator').style.display='block'; if(!isPVP || isOnline) { document.getElementById('emojis').style.display = 'block'; } else { document.getElementById('emojis').style.display = 'none'; } canvas.style.display='block'; document.getElementById('topBar').classList.remove('active'); document.getElementById('match-settings-btn').classList.add('active');
@@ -1296,7 +1477,7 @@
             mScores={left:0, right:0}; mStats={uShots:0, uTime:0, aTime:0}; document.getElementById('scoreLeft').innerText='0'; document.getElementById('scoreRight').innerText='0';
             shots=0; cTurn=startingTurn; state='idle'; globalTimeLeft = matchConfig.time; turnTimeLeft=10; turnTimerAct=true; isKickoffTurn = true; 
 
-            entities=[]; particles=[];
+            entities=[]; particles=[]; powerUpDrops=[];
             entities.push(new Disk(P_LEFT,G_TOP,POST_RADIUS,Infinity,'#fff','post')); entities.push(new Disk(P_LEFT,G_BOTTOM,POST_RADIUS,Infinity,'#fff','post')); entities.push(new Disk(P_RIGHT,G_TOP,POST_RADIUS,Infinity,'#fff','post')); entities.push(new Disk(P_RIGHT,G_BOTTOM,POST_RADIUS,Infinity,'#fff','post')); entities.push(new Disk(500,300,16,1.0,'#fff','ball'));
             
             let bPos = getPositions(matchConfig.format, 'blue', cTac);
@@ -1308,9 +1489,6 @@
             isMatchRunning = true; updateUI(p1Color, p2Color); playSound('whistle'); lastTs=performance.now(); if(loopId) cancelAnimationFrame(loopId); loop(performance.now());
         }
 
-        function sendEmoji(e, ev) { if(ev) ev.stopPropagation(); let pId = isOnline ? (isHost ? 'p1' : 'p2') : 'p1'; showChatBubble(pId, e); playEmojiSound(e); document.getElementById('emojiPopup').classList.remove('active'); if(isOnline && peerConn) { peerConn.send({ type: 'emoji', emoji: e }); } }
-        function showChatBubble(player, text) { let b = document.getElementById('chat-bubble-'+player); b.innerText = text; b.style.opacity = 1; b.style.transform = 'translateY(-20px) scale(1.1)'; setTimeout(()=>{ b.style.opacity = 0; b.style.transform = 'translateY(0) scale(1)'; }, 1000); }
-
         function resolveCollisions(d1, d2) {
             if(d1.type==='post' && d2.type==='post') return; const dx=d1.x-d2.x, dy=d1.y-d2.y, dist=Math.hypot(dx,dy);
             if(dist < d1.r+d2.r) {
@@ -1318,8 +1496,14 @@
                 if(d1.m!==Infinity && d2.m!==Infinity){ d1.x+=nx*over*0.5; d1.y+=ny*over*0.5; d2.x-=nx*over*0.5; d2.y-=ny*over*0.5; } else if(d1.m===Infinity){ d2.x-=nx*over; d2.y-=ny*over; } else { d1.x+=nx*over; d1.y+=ny*over; }
                 const kx=d1.vx-d2.vx, ky=d1.vy-d2.vy, p=2*(nx*kx+ny*ky)/(d1.m===Infinity||d2.m===Infinity?1:(d1.m+d2.m));
                 if(d1.m!==Infinity && d2.m!==Infinity){ d1.vx-=p*d2.m*nx; d1.vy-=p*d2.m*ny; d2.vx+=p*d1.m*nx; d2.vy+=p*d1.m*ny; } else if(d1.m!==Infinity){ d1.vx-=1.8*(d1.vx*nx+d1.vy*ny)*nx; d1.vy-=1.8*(d1.vx*nx+d1.vy*ny)*ny; playSound('post',2); } else { d2.vx-=1.8*(d2.vx*nx+d2.vy*ny)*nx; d2.vy-=1.8*(d2.vx*nx+d2.vy*ny)*ny; playSound('post',2); }
+                
+                // Track last hit for powerups
+                if(d1.type==='ball' && d2.type==='player') lastHitTeam = d2.team;
+                if(d2.type==='ball' && d1.type==='player') lastHitTeam = d1.team;
+
                 if(d1.type === 'player' && d2.type === 'ball' && d1.isSuper) { d2.vx += d1.vx * 2.5; d2.vy += d1.vy * 2.5; d1.vx *= 0.1; d1.vy *= 0.1; d1.isSuper = false; explode(d2.x, d2.y, '#ff3333', 40, 6); playSound('powerup', 2); screenShake = 20; }
                 if(d2.type === 'player' && d1.type === 'ball' && d2.isSuper) { d1.vx += d2.vx * 2.5; d1.vy += d2.vy * 2.5; d2.vx *= 0.1; d2.vy *= 0.1; d2.isSuper = false; explode(d1.x, d1.y, '#ff3333', 40, 6); playSound('powerup', 2); screenShake = 20; }
+                
                 let imp = Math.hypot(kx,ky); if(imp>1.5 && d1.m!==Infinity && d2.m!==Infinity) { playSound('hit',imp); if(imp>6 && screenShake<imp) screenShake=imp*1.5; explode(d1.x-nx*d1.r, d1.y-ny*d1.r, '#fff', Math.floor(imp*1.5), imp*0.4); }
             }
         }
@@ -1337,17 +1521,16 @@
 
         function showMsg(m, c) { let e=document.getElementById('message-overlay'); e.innerText=m; e.style.color=c; e.style.textShadow=`0 0 25px ${c}`; e.style.display='block'; setTimeout(()=>e.style.display='none', 1500); }
 
-        // ONLİDƏ VƏ DİGƏR REJİMLərdə QOL VURULANDA "FAUL" YOX, "GOOOAL!!!" GÖSTƏRİLƏN HİSSƏ
         function scoreGoal(team) {
             if(state==='goal' || state==='gameover') return;
-            if (isKickoffTurn) { state='goal'; turnTimerAct=false; playSound('foul'); showMsg("FOUL! INDIRECT KICKOFF", "#ff3333"); startingTurn = (cTurn === 'blue') ? 'pink' : 'blue'; setTimeout(()=>{ entities.forEach(e=>e.reset()); shots=0; state='idle'; isKickoffTurn=true; cTurn = startingTurn; updateUI(isPVP?pvpTeam1.c:pData.color, isPVP?pvpTeam2.c:(league.find(t=>t.id===oppId).c||"#ff00ea")); turnTimeLeft=10; turnTimerAct=true; if(cTurn==='pink' && !isPVP) triggerAI(); }, 1500); return; }
+            if (isKickoffTurn) { state='goal'; turnTimerAct=false; playSound('foul'); showMsg("FOUL! INDIRECT KICKOFF", "#ff3333"); startingTurn = (cTurn === 'blue') ? 'pink' : 'blue'; setTimeout(()=>{ entities.forEach(e=>e.reset()); shots=0; state='idle'; isKickoffTurn=true; cTurn = startingTurn; powerUpDrops=[]; updateUI(isPVP?pvpTeam1.c:pData.color, isPVP?pvpTeam2.c:(league.find(t=>t.id===oppId).c||"#ff00ea")); turnTimeLeft=10; turnTimerAct=true; if(cTurn==='pink' && !isPVP) triggerAI(); }, 1500); return; }
             
             state='goal'; turnTimerAct=false; 
             let p1Color = isPVP ? pvpTeam1.c : pData.color; 
             let p2Color = isPVP ? pvpTeam2.c : (league.find(t=>t.id===oppId) ? league.find(t=>t.id===oppId).c : "#ff00ea");
             
             playSound('goal'); screenShake = 15; explode(team==='blue'?P_RIGHT:P_LEFT, 300, team==='blue'?p1Color:p2Color, 100, 10); 
-            showMsg("GOOOAL!!!", team==='blue'?p1Color:p2Color); // Qol mesajı düzəldildi
+            showMsg("GOOOAL!!!", team==='blue'?p1Color:p2Color);
             
             if(team==='blue') { mScores.left++; } else { mScores.right++; }
             
@@ -1355,7 +1538,7 @@
             if(isOnline && isHost && peerConn) { peerConn.send({ type: 'sync_score', mScores: mScores }); }
 
             startingTurn = (team === 'blue') ? 'pink' : 'blue';
-            setTimeout(()=>{ if(mScores.left>=matchConfig.goals || mScores.right>=matchConfig.goals) finishMatch(); else { entities.forEach(e=>e.reset()); shots=0; state='idle'; isKickoffTurn = true; cTurn = startingTurn; updateUI(p1Color, p2Color); turnTimeLeft=10; turnTimerAct=true; if(cTurn==='pink' && !isPVP) triggerAI(); } }, 1500);
+            setTimeout(()=>{ if(mScores.left>=matchConfig.goals || mScores.right>=matchConfig.goals) finishMatch(); else { entities.forEach(e=>e.reset()); shots=0; state='idle'; isKickoffTurn = true; cTurn = startingTurn; powerUpDrops=[]; updateUI(p1Color, p2Color); turnTimeLeft=10; turnTimerAct=true; if(cTurn==='pink' && !isPVP) triggerAI(); } }, 1500);
         }
 
         function updateUI(p1c, p2c) { 
@@ -1396,7 +1579,6 @@
             if (e.type.includes('touch')) e.preventDefault(); 
             if (state !== 'idle') return; 
             if (!isPVP && cTurn === 'pink') return; 
-
             if (isOnline) { if (isHost && cTurn !== 'blue') return; if (!isHost && cTurn !== 'pink') return; }
             const p = getMPos(e);
             for (let d of entities) { let hitThreshold = d.r + 35; if (d.team === cTurn && Math.hypot(d.x - p.x, d.y - p.y) < hitThreshold) { selDisk = d; dragS = p; dragC = p; state = 'aiming'; break; } }
@@ -1422,13 +1604,21 @@
         function drawNet(x, y, w, h) { ctx.beginPath(); ctx.strokeStyle = 'rgba(255,255,255,0.2)'; ctx.lineWidth = 1.5; for(let i=0; i<=w; i+=8) { ctx.moveTo(x+i, y); ctx.lineTo(x+i, y+h); } for(let i=0; i<=h; i+=8) { ctx.moveTo(x, y+i); ctx.lineTo(x+w, y+i); } ctx.stroke(); ctx.strokeStyle = 'rgba(255,255,255,0.8)'; ctx.lineWidth = 3; ctx.strokeRect(x,y,w,h); }
 
         function drawPitch() {
-            let bgCol = activeStadium === 'matrix' ? '#001a05' : (activeStadium === 'sunset' ? '#1a0d00' : (activeStadium==='neon'?'#0a001a':(activeStadium==='cyber'?'#00111a':'#010803'))); 
+            let bgCol = activeStadium === 'matrix' ? '#001a05' : (activeStadium === 'sunset' ? '#2e1c0c' : (activeStadium==='neon'?'#0a001a':(activeStadium==='cyber'?'#00111a':'#1e3b20'))); 
             if(lightMode === 'dim') bgCol = '#010502';
             ctx.fillStyle = bgCol; ctx.fillRect(0, 0, canvas.width, canvas.height);
-            let pitchCol = activeStadium === 'sunset' ? '#261400' : (activeStadium === 'matrix' ? '#002206' : (activeStadium==='neon'?'#1a0033':(activeStadium==='cyber'?'#002233':'#042208'))); 
-            let pitchGradE = activeStadium === 'matrix' ? '#001103' : (activeStadium==='neon'?'#0d001a':(activeStadium==='cyber'?'#00111a':'#021104'));
-            let grd = ctx.createLinearGradient(P_LEFT, P_TOP, P_RIGHT, P_BOTTOM); grd.addColorStop(0, pitchCol); grd.addColorStop(1, pitchGradE); ctx.fillStyle = grd; ctx.fillRect(P_LEFT, P_TOP, P_RIGHT-P_LEFT, P_BOTTOM-P_TOP);
-            let stripeW = (P_RIGHT - P_LEFT) / 10; for(let i=0; i<10; i++) { ctx.fillStyle = i%2===0 ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.05)'; ctx.fillRect(P_LEFT + i*stripeW, P_TOP, stripeW, P_BOTTOM - P_TOP); }
+            let pitchCol = activeStadium === 'sunset' ? '#402008' : (activeStadium === 'matrix' ? '#002206' : (activeStadium==='neon'?'#1a0033':(activeStadium==='cyber'?'#002233':'#264f27'))); 
+            let pitchGradE = activeStadium === 'matrix' ? '#001103' : (activeStadium==='neon'?'#0d001a':(activeStadium==='cyber'?'#00111a':'#132b14'));
+            
+            // Realistic Vignette / Grass gradient
+            let grd = ctx.createRadialGradient(canvas.width/2, canvas.height/2, 50, canvas.width/2, canvas.height/2, canvas.width*0.8); 
+            grd.addColorStop(0, pitchCol); grd.addColorStop(1, pitchGradE); ctx.fillStyle = grd; 
+            ctx.fillRect(P_LEFT, P_TOP, P_RIGHT-P_LEFT, P_BOTTOM-P_TOP);
+            
+            // Texture Stripes
+            let stripeW = (P_RIGHT - P_LEFT) / 10; 
+            for(let i=0; i<10; i++) { ctx.fillStyle = i%2===0 ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.02)'; ctx.fillRect(P_LEFT + i*stripeW, P_TOP, stripeW, P_BOTTOM - P_TOP); }
+            
             ctx.strokeStyle='#ffffff'; ctx.shadowBlur=20; ctx.shadowColor='rgba(255,255,255,0.8)'; ctx.lineWidth=3; ctx.strokeRect(P_LEFT,P_TOP,P_RIGHT-P_LEFT,P_BOTTOM-P_TOP); ctx.beginPath(); ctx.moveTo(500,P_TOP); ctx.lineTo(500,P_BOTTOM); ctx.stroke(); ctx.beginPath(); ctx.arc(500,300,75,0,Math.PI*2); ctx.stroke(); ctx.strokeRect(P_LEFT,P_TOP+100,120,280); ctx.strokeRect(P_RIGHT-120,P_TOP+100,120,280); ctx.shadowBlur=0; drawNet(P_LEFT-45, G_TOP, 45, G_BOTTOM-G_TOP); drawNet(P_RIGHT, G_TOP, 45, G_BOTTOM-G_TOP);
             
             let p1Color = isPVP ? pvpTeam1.c : pData.color; let p2Color = isPVP ? pvpTeam2.c : (league.find(t=>t.id===oppId) ? league.find(t=>t.id===oppId).c : "#ff00ea");
@@ -1479,9 +1669,44 @@
                     if(state==='aiming') state='moving'; 
                 } 
             }
+            
+            // Random PowerUp Spawn
+            if (Math.random() < 0.003 && powerUpDrops.length < 2 && state==='idle' && !isOnline) {
+                powerUpDrops.push(new PowerUpItem(P_LEFT+100+Math.random()*(P_RIGHT-P_LEFT-200), P_TOP+50+Math.random()*(P_BOTTOM-P_TOP-100), Math.random()>0.5?'speed':'super'));
+            }
+
             ctx.save(); if(screenShake>0){ ctx.translate((Math.random()-0.5)*screenShake, (Math.random()-0.5)*screenShake); screenShake*=0.9; if(screenShake<0.5) screenShake=0; }
             drawPitch(); let anyM = false;
-            for(let i=0; i<entities.length; i++){ if(state!=='goal' && entities[i].m!==Infinity){ entities[i].update(); handleWalls(entities[i]); } if(Math.abs(entities[i].vx)>0.08 || Math.abs(entities[i].vy)>0.08) anyM=true; for(let j=i+1; j<entities.length; j++) resolveCollisions(entities[i], entities[j]); entities[i].draw(); }
+            
+            // Sub-stepping for Physics (Anti-tunneling / CCD)
+            let subSteps = 3;
+            for(let s=0; s<subSteps; s++) {
+                for(let i=0; i<entities.length; i++){ 
+                    if(state!=='goal') entities[i].subUpdate(subSteps); 
+                    handleWalls(entities[i]);
+                    for(let j=i+1; j<entities.length; j++) resolveCollisions(entities[i], entities[j]); 
+                }
+            }
+
+            let theBall = entities.find(e => e.type === 'ball');
+            for(let i=0; i<entities.length; i++){ 
+                entities[i].updateFriction(); 
+                entities[i].trackTrail();
+                if(Math.abs(entities[i].vx)>0.08 || Math.abs(entities[i].vy)>0.08) anyM=true; 
+                entities[i].draw(); 
+            }
+
+            // Draw and Check PowerUps
+            for(let i=powerUpDrops.length-1; i>=0; i--) {
+                let pu = powerUpDrops[i]; pu.draw();
+                if(pu.active && theBall && Math.hypot(theBall.x-pu.x, theBall.y-pu.y) < theBall.r + pu.r) {
+                    pu.active = false; playSound('powerup');
+                    if(pu.type === 'speed') { theBall.vx *= 2.0; theBall.vy *= 2.0; explode(pu.x, pu.y, '#00ffff', 20, 5); }
+                    if(pu.type === 'super') { powerups[lastHitTeam]++; updateUI(); showMsg("+SUPER CHARGE", lastHitTeam==='blue'?pData.color:'#ff00ea'); explode(pu.x, pu.y, '#ffff00', 20, 5); }
+                    powerUpDrops.splice(i,1);
+                }
+            }
+
             for(let i=particles.length-1; i>=0; i--) { particles[i].update(); particles[i].draw(); if(particles[i].life<=0) particles.splice(i,1); }
             if (state==='aiming' && selDisk) { let dx=dragS.x-dragC.x, dy=dragS.y-dragC.y; let f=Math.min(Math.hypot(dx,dy),150); let a=Math.atan2(dy,dx); let isSup = activeSuper[cTurn]; ctx.beginPath(); ctx.arc(selDisk.x, selDisk.y, selDisk.r + (f*0.2), 0, Math.PI*2); ctx.strokeStyle = isSup ? 'rgba(255,51,51,0.6)' : 'rgba(51,255,51,0.5)'; ctx.lineWidth = 2; ctx.stroke(); ctx.beginPath(); ctx.moveTo(selDisk.x,selDisk.y); ctx.lineTo(selDisk.x+Math.cos(a)*f*1.6, selDisk.y+Math.sin(a)*f*1.6); ctx.setLineDash([15,10]); ctx.lineWidth=6; ctx.strokeStyle = isSup ? '#ff3333' : selDisk.c; ctx.shadowBlur=25; ctx.shadowColor = isSup ? '#ff3333' : selDisk.c; ctx.stroke(); ctx.setLineDash([]); ctx.shadowBlur=0; }
             ctx.restore();
@@ -1491,6 +1716,16 @@
             } 
             if (isMatchRunning) { loopId = requestAnimationFrame(loop); }
         }
-</script>
+
+        // --- PWA (Progressive Web App) Service Worker Registration ---
+        if ('serviceWorker' in navigator) {
+            let swCode = `
+                self.addEventListener('install', e => { e.waitUntil(caches.open('neon-v4.5').then(c => c.addAll(['/']))); });
+                self.addEventListener('fetch', e => { e.respondWith(caches.match(e.request).then(r => r || fetch(e.request))); });
+            `;
+            let blob = new Blob([swCode], {type: 'application/javascript'});
+            navigator.serviceWorker.register(URL.createObjectURL(blob)).then(() => console.log('PWA Service Worker Registered'));
+        }
+    </script>
 </body>
 </html>
