@@ -650,7 +650,7 @@
                 <div class="score" id="scoreRight">0</div>
             </div>
             <div class="emoji-container" id="emojis">
-                <div class="emoji-toggle-btn" onclick="toggleEmojiPopup()">💬
+                <div class="emoji-toggle-btn" onclick="toggleEmojiPopup(event)">💬
                     <div class="emoji-popup" id="emojiPopup">
                         <div class="popup-emoji" onclick="sendEmoji('😀', event)">😀</div><div class="popup-emoji" onclick="sendEmoji('😭', event)">😭</div>
                         <div class="popup-emoji" onclick="sendEmoji('😡', event)">😡</div><div class="popup-emoji" onclick="sendEmoji('🎯', event)">🎯</div>
@@ -688,17 +688,31 @@
             });
         }
         preloadFlags();
+        
+        // --- CHAT & EMOJI SYSTEM ---
+        function showChatBubble(player, emoji) {
+            let bubble = document.getElementById(player === 'p1' ? 'chat-bubble-p1' : 'chat-bubble-p2');
+            bubble.innerText = emoji;
+            bubble.style.opacity = 1;
+            bubble.style.transform = 'translateY(-20px) scale(1.2)';
+            setTimeout(() => {
+                bubble.style.opacity = 0;
+                bubble.style.transform = 'translateY(0) scale(1)';
+            }, 2000);
+        }
+
+        function sendEmoji(emoji, e) {
+            if(e) e.stopPropagation();
+            let player = (isPVP && (!isOnline || !isHost)) ? 'p2' : 'p1';
+            showChatBubble(player, emoji);
+            playEmojiSound();
+            if(isOnline && peerConn) { peerConn.send({ type: 'emoji', emoji: emoji }); }
+            document.getElementById('emojiPopup').classList.remove('active');
+        }
 
         // --- GLOBAL STATS & LEADERBOARD SYSTEM ---
         function getGlobalLeaderboard() {
-            let lb = JSON.parse(localStorage.getItem('nsc_global_stats_world')) || [
-                { name: "Faker_TR", total: 4500, history: [] },
-                { name: "ProManager_UK", total: 4200, history: [] },
-                { name: "Alex_BR", total: 3900, history: [] },
-                { name: "NeonGod", total: 3100, history: [] },
-                { name: "Guest_991", total: 1500, history: [] }
-            ];
-            return lb;
+            return JSON.parse(localStorage.getItem('nsc_global_stats_world')) || [];
         }
         function saveGlobalLeaderboard(lb) { localStorage.setItem('nsc_global_stats_world', JSON.stringify(lb)); }
         function updateLeaderboard(name, win, draw) {
@@ -714,11 +728,11 @@
             let lb = getGlobalLeaderboard();
             lb.sort((a,b) => b.total - a.total);
             let html = '';
-            if(lb.length === 0) html = '<div style="color:#aaa;">No stats available yet. Play Career!</div>';
+            if(lb.length === 0) html = '<div style="color:#aaa;">Statistika hələ ki, boşdur. Karyera rejimində oyna!</div>';
             lb.forEach((m,i) => {
                 let isMe = m.name === (document.getElementById('manager-name-input').value.trim() || "GuestManager");
                 html += `<div style="background:rgba(255,255,255,0.05); border:1px solid ${isMe?'#33ff33':'#00f3ff'}; border-radius:8px; padding:10px; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center;">
-                    <div><span style="color:#ffd700; font-weight:900;">#${i+1}</span> <span style="${isMe?'color:#33ff33;font-weight:bold;':''}">${m.name} ${isMe?'(YOU)':''}</span></div>
+                    <div><span style="color:#ffd700; font-weight:900;">#${i+1}</span> <span style="${isMe?'color:#33ff33;font-weight:bold;':''}">${m.name} ${isMe?'(SƏN)':''}</span></div>
                     <div style="color:${isMe?'#33ff33':'#fff'}; font-weight:bold;">${m.total} PTS</div>
                 </div>`;
             });
@@ -729,10 +743,7 @@
         // --- GLOBAL REVIEWS & DISCUSSION SYSTEM ---
         let currentRating = 0;
         function getGlobalReviews() {
-            return JSON.parse(localStorage.getItem('nsc_global_reviews_v2')) || [
-                { id: 1, name: "NeonStriker", rating: 5, text: "Best web soccer game I've played!", likes: 24, dislikes: 1, replies: [{name: "Dev", text: "Thanks for playing!"}] },
-                { id: 2, name: "Faker_TR", rating: 4, text: "Good physics, but it needs more teams in Career mode.", likes: 12, dislikes: 0, replies: [] }
-            ];
+            return JSON.parse(localStorage.getItem('nsc_global_reviews_v2')) || [];
         }
         function saveGlobalReviews(r) { localStorage.setItem('nsc_global_reviews_v2', JSON.stringify(r)); }
         
@@ -748,7 +759,7 @@
             let avgEl = document.getElementById('average-rating');
             
             if(reviews.length === 0) {
-                list.innerHTML = "<p>No reviews yet. Be the first!</p>";
+                list.innerHTML = "<p>Hələ ki, şərh yoxdur. İlk şərhi sən yaz!</p>";
                 avgEl.innerHTML = `0.0 <span style="font-size:24px;">/ 5.0</span>`;
                 return;
             }
@@ -768,10 +779,11 @@
                         <span class="review-stars">${starString}</span>
                     </div>
                     <div class="review-text">${r.text}</div>
-                    <div style="margin-top: 10px; display: flex; align-items: center;">
+                    <div style="margin-top: 10px; display: flex; align-items: center; flex-wrap: wrap; gap: 5px;">
                         <button class="action-btn" onclick="likeReview(${r.id})">👍 ${r.likes}</button>
                         <button class="action-btn" onclick="dislikeReview(${r.id})">👎 ${r.dislikes}</button>
-                        <button class="action-btn" style="color:#00f3ff; border-color:#00f3ff;" onclick="replyReview(${r.id})">💬 Reply</button>
+                        <button class="action-btn" style="color:#00f3ff; border-color:#00f3ff;" onclick="replyReview(${r.id})">💬 Cavabla</button>
+                        <button class="action-btn" style="color:#ff3333; border-color:#ff3333;" onclick="deleteReview(${r.id})">🗑️ Sil</button>
                     </div>
                     ${repliesHtml}
                 </div>`;
@@ -783,8 +795,8 @@
         
         function submitReview() {
             let text = document.getElementById('review-input').value.trim();
-            if (currentRating === 0) { alert("Please select a star rating!"); return; }
-            if (text === "") { alert("Please write a comment!"); return; }
+            if (currentRating === 0) { alert("Zəhmət olmasa ulduz verin!"); return; }
+            if (text === "") { alert("Zəhmət olmasa rəyinizi yazın!"); return; }
             
             let reviews = getGlobalReviews();
             let name = document.getElementById('manager-name-input').value.trim() || "GuestManager";
@@ -795,23 +807,54 @@
             saveGlobalReviews(reviews);
             document.getElementById('review-input').value = ""; setRating(0);
             renderReviews();
-            alert("Thank you! Your review is now visible to all players.");
+            alert("Təşəkkürlər! Rəyiniz qeydə alındı.");
         }
 
-        function likeReview(id) { let r = getGlobalReviews(); let rev = r.find(x => x.id === id); if(rev) { rev.likes++; saveGlobalReviews(r); renderReviews(); } }
-        function dislikeReview(id) { let r = getGlobalReviews(); let rev = r.find(x => x.id === id); if(rev) { rev.dislikes++; saveGlobalReviews(r); renderReviews(); } }
+        function checkVoteStatus(id) {
+            let votedItems = JSON.parse(localStorage.getItem('nsc_voted_reviews') || '[]');
+            if (votedItems.includes(id)) {
+                alert("Siz artıq bu rəyə reaksiya vermisiniz!");
+                return false;
+            }
+            votedItems.push(id);
+            localStorage.setItem('nsc_voted_reviews', JSON.stringify(votedItems));
+            return true;
+        }
+
+        function likeReview(id) {
+            if(!checkVoteStatus(id)) return;
+            let r = getGlobalReviews(); let rev = r.find(x => x.id === id); 
+            if(rev) { rev.likes++; saveGlobalReviews(r); renderReviews(); } 
+        }
+        function dislikeReview(id) { 
+            if(!checkVoteStatus(id)) return;
+            let r = getGlobalReviews(); let rev = r.find(x => x.id === id); 
+            if(rev) { rev.dislikes++; saveGlobalReviews(r); renderReviews(); } 
+        }
         function replyReview(id) {
-            let txt = prompt("Write your reply:");
+            let txt = prompt("Cavabınızı yazın:");
             if(txt && txt.trim() !== '') {
                 let r = getGlobalReviews(); let rev = r.find(x => x.id === id);
                 let name = document.getElementById('manager-name-input').value.trim() || "GuestManager";
                 if(rev) { rev.replies.push({name: name, text: txt.trim()}); saveGlobalReviews(r); renderReviews(); }
             }
         }
+        function deleteReview(id) {
+            let pass = prompt("Yalnız Developer silə bilər. Zəhmət olmasa şifrəni daxil edin:");
+            if (pass === "admin123") {
+                let r = getGlobalReviews();
+                r = r.filter(x => x.id !== id);
+                saveGlobalReviews(r);
+                renderReviews();
+                alert("Şərh uğurla silindi.");
+            } else if (pass !== null) {
+                alert("Yanlış şifrə! Şərhi yalnız developer silə bilər.");
+            }
+        }
 
         function checkManagerName() {
             let n = document.getElementById('manager-name-input').value.trim();
-            if(!n) { alert('Please enter your Manager Name!'); return false; }
+            if(!n) { alert('Zəhmət olmasa Manager Adınızı daxil edin!'); return false; }
             return true;
         }
 
@@ -843,7 +886,7 @@
         function copyRoomCode() {
             const codeEl = document.getElementById('the-room-code');
             navigator.clipboard.writeText(codeEl.innerText).then(() => {
-                document.getElementById('copy-hint').innerText = "✅ Copied to clipboard!";
+                document.getElementById('copy-hint').innerText = "✅ Kopyalandı!";
                 setTimeout(() => document.getElementById('copy-hint').innerText = "👆 Tap code to copy", 2000);
             });
         }
@@ -1064,7 +1107,7 @@
         
         function closeSaveLoadUI() { document.getElementById('screen-saveload').classList.remove('active'); if (saveMode === 'save') { document.getElementById('screen-settings').classList.add('active'); } else { switchScreen('screen-welcome'); } }
         function toggleLights() { lightMode = (lightMode === 'high') ? 'dim' : 'high'; document.getElementById('btn-lights').innerText = `BRIGHTNESS: ${lightMode.toUpperCase()}`; }
-        function toggleEmojiPopup() { document.getElementById('emojiPopup').classList.toggle('active'); }
+        function toggleEmojiPopup(e) { if(e) e.stopPropagation(); document.getElementById('emojiPopup').classList.toggle('active'); }
         function openMarket() { switchScreen('screen-market'); }
         function openSkills() { 
             document.getElementById('skill-points-text').innerText = `AVAILABLE SKILL POINTS: ${pData.skillPoints}`; 
@@ -1125,7 +1168,7 @@
             else if(type === 'powerup') { osc.type = 'sawtooth'; filter.type = 'lowpass'; filter.frequency.setValueAtTime(200, now); filter.frequency.linearRampToValueAtTime(2000, now + 0.3); osc.frequency.setValueAtTime(100, now); osc.frequency.exponentialRampToValueAtTime(800, now + 0.3); gain.gain.setValueAtTime(v * 0.8, now); gain.gain.linearRampToValueAtTime(0, now + 0.4); osc.connect(filter); osc.start(now); osc.stop(now + 0.4); }
         }
 
-        function playEmojiSound(e) {
+        function playEmojiSound() {
             if(!audioCtx || sfxVol<=0) return;
             const now = audioCtx.currentTime; const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain(); osc.connect(gain); gain.connect(audioCtx.destination);
             osc.type = 'sine'; osc.frequency.setValueAtTime(500, now); osc.frequency.linearRampToValueAtTime(750, now+0.15); gain.gain.setValueAtTime(0.15*sfxVol, now); gain.gain.linearRampToValueAtTime(0.01, now+0.15); osc.start(now); osc.stop(now+0.15);
